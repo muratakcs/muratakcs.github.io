@@ -1,1 +1,0 @@
-# muratakcs.github.io

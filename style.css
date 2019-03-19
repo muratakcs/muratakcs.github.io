@@ -1,0 +1,19 @@
+div{
+
+}
+
+.red-title{
+  color: red;
+  font-size: 2em;
+  margin: 0;
+  margin-left: 10px;
+}
+
+#page-title{
+  background: black;
+  color: blue;
+}
+
+p{
+  line-height: 140%;
+}

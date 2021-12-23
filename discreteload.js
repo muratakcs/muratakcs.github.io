@@ -53,24 +53,9 @@ function within(x, y) {
     });
 }
 
-function move(e) {
-    if (selection) {
-        selection.x = e.x;
-        selection.y = e.y;
-        drawNode(selection);
-    }
-}
 
-function down(e) {
-    let target = within(e.x, e.y);
-    if (target) {
-        selection = target;
-    }
-}
 
-function up(e) {
-    selection = undefined;
-}
+
 
 window.onmousemove = move;
 window.onmousedown = down;
@@ -91,62 +76,13 @@ function click(e) {
     draw();
 }
 
-function move(e) {
-    if (selection) {
-        selection.x = e.x;
-        selection.y = e.y;
-        draw();
-    }
-}
-
-function draw() {
-    context.clearRect(0, 0, window.innerWidth, window.innerHeight);
-    for (let i = 0; i < nodes.length; i++) {
-        let node = nodes[i];
-        context.beginPath();
-        context.fillStyle = node.fillStyle;
-        context.arc(node.x, node.y, node.radius, 0, Math.PI * 2, true);
-        context.strokeStyle = node.strokeStyle;
-        context.fill();
-        context.stroke();
-    }
-}
 
 
 
 
 
 
-/** remove the onclick code and update move and up code */
-function move(e) {
-    if (selection) {
-        selection.x = e.x;
-        selection.y = e.y;
-        selection.moving = true;
-        draw();
-    }
-}
 
-function up(e) {
-    if (!selection || !selection.moving) {
-        let node = {
-            x: e.x,
-            y: e.y,
-            radius: 10,
-            fillStyle: '#22cccc',
-            strokeStyle: '#009999',
-            selectedFill: '#88aaaa'
-        };
-        nodes.push(node);
-        draw();
-    }
-    if (selection) {
-        delete selection.moving;
-        delete selection.selected;
-    }
-    selection = undefined;
-    draw();
-}
 
 
 
@@ -163,17 +99,7 @@ function move(e) {
     }
 }
 
-function down(e) {
-    let target = within(e.x, e.y);
-    if (selection && selection.selected) {
-        selection.selected = false;
-    }
-    if (target) {
-        selection = target;
-        selection.selected = true;
-        draw();
-    }
-}
+
 
 function up(e) {
     if (!selection) {

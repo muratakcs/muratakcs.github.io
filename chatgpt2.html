@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+
+  <title>Murat Ak — Cryptography Researcher</title>
+  <meta name="description" content="Murat Ak — academic cryptography researcher. Research, publications, teaching, and contact." />
+  <link rel="canonical" href="https://muratak.github.io/" />
+
+  <meta property="og:title" content="Murat Ak — Cryptography Researcher" />
+  <meta property="og:description" content="Academic cryptography researcher. Research, publications, teaching, and contact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://muratak.github.io/" />
+  <meta name="twitter:card" content="summary" />
+
+  <style>
+    :root{
+      --bg0:#07080c;
+      --bg1:#0a0d14;
+      --panel:#0f1421cc;
+      --paper:#0f1421;
+      --text:#e9eef8;
+      --muted:#b2c0d6;
+      --faint:#7d90aa;
+      --border:rgba(255,255,255,.12);
+      --border2:rgba(125,211,252,.18);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --accent3:#34d399;
+      --shadow:0 20px 50px rgba(0,0,0,.45);
+      --radius:18px;
+      --maxw: 1040px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    [data-theme="light"]{
+      --bg0:#fbfbfd;
+      --bg1:#f2f5fb;
+      --panel:#ffffffcc;
+      --paper:#ffffff;
+      --text:#0a1220;
+      --muted:#42526b;
+      --faint:#6b7a92;
+      --border:rgba(0,0,0,.12);
+      --border2:rgba(2,132,199,.18);
+      --accent:#0284c7;
+      --accent2:#6d28d9;
+      --accent3:#059669;
+      --shadow:0 18px 44px rgba(0,0,0,.14);
+    }
+
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(900px 700px at 18% 0%, rgba(125,211,252,.20), transparent 60%),
+        radial-gradient(800px 650px at 90% 20%, rgba(167,139,250,.18), transparent 58%),
+        radial-gradient(700px 650px at 70% 90%, rgba(52,211,153,.12), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow-x:hidden;
+    }
+
+    /* Subtle "crypto grid" overlay */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.35;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(800px 600px at 45% 15%, rgba(0,0,0,1), rgba(0,0,0,.1) 65%, transparent 80%);
+    }
+    [data-theme="light"] body::before{
+      opacity:.22;
+      background:
+        linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px);
+    }
+
+    a{ color: inherit; text-decoration:none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 26px 18px 80px; }
+
+    /* Topbar */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:10;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 14px 0;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.38), transparent);
+    }
+    [data-theme="light"] .topbar{
+      background: linear-gradient(to bottom, rgba(255,255,255,.78), transparent);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap: 12px;
+      min-width: 260px;
+    }
+    .sigil{
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      font-family: var(--mono);
+      font-weight: 800;
+      color:#061018;
+      letter-spacing: .5px;
+    }
+    /* animated shimmer */
+    .sigil::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,.55), transparent 60%);
+      transform: translateX(-80%) rotate(10deg);
+      animation: shimmer 5.5s ease-in-out infinite;
+      opacity:.45;
+    }
+    @keyframes shimmer{
+      0%, 55% { transform: translateX(-85%) rotate(10deg); }
+      70%, 100% { transform: translateX(85%) rotate(10deg); }
+    }
+
+    .brand .name{ display:flex; flex-direction:column; line-height:1.1; }
+    .brand .name strong{ font-size: 14.5px; }
+    .brand .name span{ font-size: 12.5px; color: var(--muted); }
+
+    .nav{
+      display:flex;
+      flex-wrap: wrap;
+      justify-content:flex-end;
+      gap: 10px;
+    }
+    .nav a{
+      font-size: 13px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      transition: transform .15s ease, background .15s ease, color .15s ease;
+    }
+    [data-theme="light"] .nav a{ background: rgba(0,0,0,.02); }
+    .nav a:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      text-decoration:none;
+    }
+
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 9px 11px;
+      cursor:pointer;
+      font-size: 13px;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      white-space:nowrap;
+    }
+    [data-theme="light"] .btn{ background: rgba(0,0,0,.02); }
+    .btn:hover{ background: rgba(255,255,255,.08); }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      border-radius: calc(var(--radius) + 6px);
+      border: 1px solid var(--border2);
+      background:
+        radial-gradient(600px 200px at 20% 10%, rgba(125,211,252,.15), transparent 60%),
+        radial-gradient(520px 220px at 80% 0%, rgba(167,139,250,.13), transparent 55%),
+        radial-gradient(420px 260px at 75% 90%, rgba(52,211,153,.09), transparent 60%),
+        rgba(255,255,255,.02);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* subtle moving cipher tape */
+    .tape{
+      position:absolute;
+      top: 0;
+      left: -20%;
+      right: -20%;
+      height: 44px;
+      display:flex;
+      align-items:center;
+      gap: 18px;
+      padding: 0 22px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.40);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: linear-gradient(to right, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      transform: rotate(-1.5deg);
+      animation: drift 20s linear infinite;
+      user-select:none;
+      white-space:nowrap;
+    }
+    [data-theme="light"] .tape{
+      color: rgba(0,0,0,.35);
+      border-bottom: 1px solid rgba(0,0,0,.08);
+      background: linear-gradient(to right, rgba(0,0,0,.04), rgba(0,0,0,.01));
+    }
+    @keyframes drift{
+      0% { transform: translateX(0) rotate(-1.5deg); }
+      100% { transform: translateX(-12%) rotate(-1.5deg); }
+    }
+
+    .hero-inner{
+      padding: 58px 26px 26px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .brand{ min-width: unset; }
+      .hero-inner{ grid-template-columns: 1fr; padding-top: 64px; }
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 3.4vw, 44px);
+      letter-spacing:-.8px;
+      line-height: 1.1;
+    }
+    .lede{
+      margin: 0 0 16px;
+      color: var(--muted);
+      max-width: 75ch;
+      font-size: 15.5px;
+    }
+
+    .callouts{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 13px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    [data-theme="light"] .badge{ background: rgba(0,0,0,.015); }
+
+    .panel{
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--panel);
+      padding: 16px;
+    }
+    [data-theme="light"] .panel{ background: rgba(255,255,255,.88); }
+
+    .panel h3{
+      margin:0 0 10px;
+      font-size: 12.5px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      color: var(--faint);
+    }
+
+    .linkgrid{
+      display:grid;
+      gap: 10px;
+    }
+    .link{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    [data-theme="light"] .link{ background: rgba(0,0,0,.015); }
+    .link b{ font-weight:650; }
+    .link span{ color: var(--muted); font-size: 13px; }
+
+    /* Sections */
+    section{
+      margin-top: 18px;
+      padding: 20px 20px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    [data-theme="light"] section{ background: rgba(0,0,0,.015); }
+
+    section h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing:.2px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .sig{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.02);
+    }
+
+    .lead{
+      margin:0 0 14px;
+      color: var(--muted);
+      max-width: 90ch;
+    }
+
+    .cols{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 900px){
+      .cols{ grid-template-columns: 1fr; }
+    }
+
+    ul{ margin:0; padding-left: 18px; }
+    .mono{ font-family: var(--mono); }
+    .muted{ color: var(--muted); }
+
+    /* Publication cards */
+    .pubs{ display:grid; gap: 12px; }
+    .pub{
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+      position:relative;
+      overflow:hidden;
+    }
+    [data-theme="light"] .pub{
+      background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.01));
+    }
+    .pub::before{
+      content:"";
+      position:absolute;
+      left:-30%;
+      top:-50%;
+      width: 70%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(125,211,252,.14), transparent 55%);
+      transform: rotate(14deg);
+      opacity:.8;
+      pointer-events:none;
+    }
+
+    .pub .title{ font-weight: 700; margin-bottom: 4px; }
+    .pub .venue{ color: var(--muted); font-size: 13.5px; position:relative; }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 10px;
+      position:relative;
+    }
+    .chip{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+      padding: 6px 10px;
+    }
+    [data-theme="light"] .chip{ background: rgba(0,0,0,.015); }
+
+    footer{
+      margin-top: 18px;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .skip{
+      position:absolute;
+      left:-999px;
+      top: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--paper);
+      z-index: 99;
+    }
+    .skip:focus{ left: 14px; }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce){
+      .sigil::after, .tape{ animation: none !important; }
+      .nav a, .btn{ transition:none !important; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Murat Ak",
+    "jobTitle": "Academic Researcher",
+    "url": "https://muratak.github.io/",
+    "sameAs": [
+      "https://scholar.google.com/citations?user=YOUR_ID",
+      "https://orcid.org/YOUR-ORCID",
+      "https://github.com/muratak"
+    ],
+    "knowsAbout": ["Cryptography", "Provable Security", "Broadcast Encryption", "Secure Protocols"]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="sigil" aria-hidden="true">MA</div>
+        <div class="name">
+          <strong>Murat Ak</strong>
+          <span>Cryptography • Security Proofs • Protocols</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#research">Research</a>
+        <a href="#publications">Publications</a>
+        <a href="#teaching">Teaching</a>
+        <a href="#service">Service</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button class="btn" id="themeBtn" type="button" aria-label="Toggle theme">
+        <span aria-hidden="true">◐</span><span class="muted">Theme</span>
+      </button>
+    </header>
+
+    <main id="content">
+      <div class="hero">
+        <div class="tape" aria-hidden="true">
+          01100011 01110010 01111001 01110000 01110100 01101111 •
+          IND-CPA • EUF-CMA • PRF • PRP • HKDF • KEM/DEM •
+          adversary advantage ≤ ε(λ) •
+          01110011 01100101 01100011 01110101 01110010 01101001 01110100 01111001 •
+          revocation • access control • reductions •
+        </div>
+
+        <div class="hero-inner">
+          <div>
+            <h1>Cryptography with proofs that survive reality.</h1>
+            <p class="lede">
+              I am <b>Murat Ak</b>, an academic researcher in <b>cryptography</b> and <b>security</b>.
+              My work emphasizes <b>provable security</b>, <b>broadcast encryption</b>,
+              and the design/analysis of secure protocols—bridging formal definitions with implementable systems.
+            </p>
+
+            <div class="callouts">
+              <span class="badge">🔐 Provable security</span>
+              <span class="badge">📡 Broadcast encryption</span>
+              <span class="badge">🧠 Threat modeling</span>
+              <span class="badge">🧩 Protocol design</span>
+            </div>
+          </div>
+
+          <aside class="panel">
+            <h3>Index / quick access</h3>
+            <div class="linkgrid">
+              <a class="link" href="assets/CV.pdf"><b>CV (PDF)</b><span class="mono">assets/CV.pdf →</span></a>
+              <a class="link" href="https://github.com/muratak" target="_blank" rel="noopener"><b>GitHub</b><span>code →</span></a>
+              <a class="link" href="https://scholar.google.com/" target="_blank" rel="noopener"><b>Google Scholar</b><span>papers →</span></a>
+              <a class="link" href="https://orcid.org/" target="_blank" rel="noopener"><b>ORCID</b><span>profile →</span></a>
+            </div>
+            <p class="muted" style="margin: 12px 0 0; font-size: 13px;">
+              Tip: Upload your CV as <span class="mono">assets/CV.pdf</span> (optional).
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <section id="about">
+        <h2>About <span class="sig">whoami</span></h2>
+        <p class="lead">
+          <b>[Your Title]</b> at <b>[University / Department]</b>. I work on formal security models and efficient constructions,
+          and I teach cryptography and security courses with an emphasis on threat models and proof intuition.
+        </p>
+        <div class="cols">
+          <div class="panel">
+            <h3>Affiliation</h3>
+            <p style="margin:0;">
+              <b>[Your Title]</b><br/>
+              <span class="muted">[Department / University]</span><br/>
+              <span class="muted">[City, Country]</span>
+            </p>
+          </div>
+          <div class="panel">
+            <h3>Research interests</h3>
+            <ul>
+              <li>Game-based proofs, reductions, and concrete security</li>
+              <li>Broadcast encryption, revocation, access control</li>
+              <li>Protocol security, authentication, key management</li>
+              <li>(Optional) post-quantum crypto / privacy / applied security systems</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2>Research <span class="sig">focus</span></h2>
+        <p class="lead">
+          Replace the text below with your actual research agenda. Keep each point precise and “paper-like”.
+        </p>
+        <div class="cols">
+          <div class="panel">
+            <h3>Current directions</h3>
+            <ul>
+              <li><b>Broadcast encryption:</b> scalable revocation and efficient key updates.</li>
+              <li><b>Provable protocol security:</b> security definitions, composition, adversarial models.</li>
+              <li><b>Applied cryptography:</b> architectures that preserve provable properties under deployment constraints.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Keywords (for humans & search engines)</h3>
+            <p class="muted" style="margin:0;">
+              indistinguishability, reductions, security games, access structures, traitor tracing (optional),
+              authentication, KEM/DEM, secure channels, key distribution
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="publications">
+        <h2>Publications <span class="sig">papers</span></h2>
+        <p class="lead">
+          Add your papers here (selected). Link out to Scholar for the full list.
+          Keep formatting consistent: <span class="mono">Title — Venue, Year</span>.
+        </p>
+
+        <div class="pubs">
+          <div class="pub">
+            <div class="title">Paper Title One (replace)</div>
+            <div class="venue">Conference/Journal • 2025 • with Coauthors</div>
+            <div class="chips">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">DOI</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">arXiv</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">BibTeX</a>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="title">Paper Title Two (replace)</div>
+            <div class="venue">Conference/Journal • 2024 • with Coauthors</div>
+            <div class="chips">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">DOI</a>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="title">Survey / Technical Report (replace)</div>
+            <div class="venue">Preprint • 2023</div>
+            <div class="chips">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top: 12px;">
+          Full list: <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+          • <a href="https://dblp.org/" target="_blank" rel="noopener">DBLP</a>
+          • <a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a>
+        </p>
+      </section>
+
+      <section id="teaching">
+        <h2>Teaching <span class="sig">courses</span></h2>
+        <p class="lead">A short snapshot of recent teaching and supervision.</p>
+        <div class="cols">
+          <div class="panel">
+            <h3>Courses</h3>
+            <ul>
+              <li>Cryptography & Network Security</li>
+              <li>Information Systems Security</li>
+              <li>(Optional) Programming Languages / Discrete Mathematics</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Supervision</h3>
+            <ul>
+              <li>Thesis topics in applied & theoretical cryptography</li>
+              <li>Projects: protocol analysis, secure design, proof sketches</li>
+              <li>Contact me with a 5–8 line proposal + references</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="service">
+        <h2>Service <span class="sig">community</span></h2>
+        <p class="lead">Replace with your real service roles.</p>
+        <div class="cols">
+          <div class="panel">
+            <h3>Reviewing / committees</h3>
+            <ul>
+              <li>Conferences/journals: [replace]</li>
+              <li>Institutional committees: [replace]</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>Outreach</h3>
+            <ul>
+              <li>Cybersecurity talks and training for industry</li>
+              <li>Student mentoring and research guidance</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact <span class="sig">ping</span></h2>
+        <p class="lead">Email is best. For collaborations, send a brief summary and links.</p>
+        <div class="cols">
+          <div class="panel">
+            <h3>Email</h3>
+            <p style="margin:0;">
+              <span class="muted">murat.ak [at] your-university.edu</span><br/>
+              <span class="muted">Alternative:</span> <span class="muted">muratak [at] gmail.com</span>
+            </p>
+          </div>
+          <div class="panel">
+            <h3>Profiles</h3>
+            <ul>
+              <li><a href="https://github.com/muratak" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>
+              <li><a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a></li>
+              <li><a href="https://dblp.org/" target="_blank" rel="noopener">DBLP</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> Murat Ak</div>
+        <div class="muted">Single-file GitHub Pages site • <span class="mono">index.html</span></div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Theme toggle (system/dark/light) with persistence
+    (function(){
+      const key="theme";
+      const root=document.documentElement;
+      const btn=document.getElementById("themeBtn");
+
+      function systemLight(){
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      }
+      function apply(theme){
+        if(theme==="system"){
+          root.setAttribute("data-theme", systemLight() ? "light" : "dark");
+        } else {
+          root.setAttribute("data-theme", theme);
+        }
+        btn.title = "Theme: " + theme;
+        localStorage.setItem(key, theme);
+      }
+      function next(theme){
+        if(theme==="system") return "dark";
+        if(theme==="dark") return "light";
+        return "system";
+      }
+
+      const saved = localStorage.getItem(key) || "system";
+      apply(saved);
+
+      if(window.matchMedia){
+        window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+          if((localStorage.getItem(key) || "system")==="system") apply("system");
+        });
+      }
+
+      btn.addEventListener("click", () => {
+        const t = localStorage.getItem(key) || "system";
+        apply(next(t));
+      });
+    })();
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

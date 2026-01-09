@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+
+  <title>Murat Ak — Cryptography Researcher</title>
+  <meta name="description" content="Murat Ak — academic cryptography researcher. Research, publications, teaching, and contact." />
+  <link rel="canonical" href="https://muratak.github.io/" />
+
+  <style>
+    :root{
+      --bg:#040805;
+      --panel: rgba(2, 10, 4, 0.72);
+      --border: rgba(120, 255, 160, 0.18);
+      --glow: rgba(120, 255, 160, 0.22);
+      --text:#d6ffe3;
+      --muted:#8ee8aa;
+      --dim:#57b97a;
+      --green:#7CFFB2;
+      --green2:#29ff7a;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --radius: 18px;
+      --maxw: 1080px;
+      --shadow: 0 18px 60px rgba(0,0,0,.6);
+    }
+
+    html, body{ height:100%; }
+    body{
+      margin:0;
+      color: var(--text);
+      font-family: var(--mono);
+      background: radial-gradient(900px 600px at 20% 0%, rgba(41,255,122,.10), transparent 60%),
+                  radial-gradient(900px 700px at 90% 20%, rgba(124,255,178,.08), transparent 60%),
+                  linear-gradient(180deg, #030603, var(--bg));
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Fullscreen canvas rain */
+    canvas#rain{
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: .55;
+      filter: drop-shadow(0 0 12px rgba(41,255,122,.08));
+      pointer-events: none;
+    }
+
+    /* Subtle vignette */
+    body::after{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      z-index: 1;
+      background: radial-gradient(circle at 50% 30%, transparent 35%, rgba(0,0,0,.55) 85%);
+      mix-blend-mode: multiply;
+    }
+
+    .wrap{
+      position: relative;
+      z-index: 2;
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 26px 18px 80px;
+    }
+
+    /* Terminal-like top header */
+    .topbar{
+      position: sticky;
+      top: 0;
+      z-index: 6;
+      padding: 14px 0;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.55), transparent);
+    }
+
+    .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.28);
+      box-shadow: var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 270px;
+    }
+    .sigil{
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      border: 1px solid rgba(124,255,178,.25);
+      background: radial-gradient(circle at 30% 30%, rgba(124,255,178,.25), rgba(0,0,0,.0) 55%),
+                  rgba(0,0,0,.28);
+      box-shadow: 0 0 0 1px rgba(41,255,122,.12) inset, 0 0 26px rgba(41,255,122,.10);
+      display:grid;
+      place-items:center;
+      font-weight: 800;
+      letter-spacing: .6px;
+      color: var(--green);
+      text-shadow: 0 0 18px rgba(41,255,122,.22);
+    }
+    .name{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .name strong{
+      font-size: 14.5px;
+      letter-spacing: .2px;
+    }
+    .name span{
+      font-size: 12.5px;
+      color: var(--muted);
+      opacity: .9;
+    }
+
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap: 10px;
+    }
+    .pill{
+      font-size: 12.5px;
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+      white-space:nowrap;
+    }
+    .pill:hover{
+      transform: translateY(-1px);
+      background: rgba(0,0,0,.35);
+      box-shadow: 0 0 0 1px rgba(41,255,122,.12) inset, 0 0 24px rgba(41,255,122,.08);
+      text-decoration:none;
+      color: var(--text);
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 120px;
+      justify-content:flex-end;
+    }
+    .btn{
+      cursor:pointer;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      padding: 9px 11px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      box-shadow: 0 0 0 1px rgba(41,255,122,.10) inset;
+    }
+    .btn:hover{
+      background: rgba(0,0,0,.35);
+      box-shadow: 0 0 0 1px rgba(41,255,122,.14) inset, 0 0 28px rgba(41,255,122,.08);
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      border-radius: calc(var(--radius) + 6px);
+      border: 1px solid rgba(124,255,178,.22);
+      background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.20));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .scanline{
+      position:absolute;
+      inset:0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,.04),
+        rgba(255,255,255,.04) 1px,
+        transparent 2px,
+        transparent 5px
+      );
+      opacity: .10;
+      pointer-events:none;
+      mix-blend-mode: overlay;
+    }
+
+    .hero-inner{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      padding: 26px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      .hero-inner{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+      .actions{ min-width: unset; }
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(26px, 3.2vw, 44px);
+      letter-spacing: -0.6px;
+      text-shadow: 0 0 18px rgba(41,255,122,.12);
+    }
+
+    .subtitle{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 78ch;
+    }
+
+    .prompt{
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(124,255,178,.22);
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 0 0 1px rgba(41,255,122,.09) inset;
+      font-size: 12.5px;
+      color: var(--dim);
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+    }
+    .cursor{
+      width: 10px; height: 18px;
+      border-radius: 3px;
+      background: rgba(41,255,122,.6);
+      box-shadow: 0 0 18px rgba(41,255,122,.25);
+      animation: blink 1s steps(2,end) infinite;
+      margin-top: 2px;
+      flex: 0 0 auto;
+    }
+    @keyframes blink{
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .tag{
+      font-size: 12.5px;
+      color: var(--muted);
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.20);
+    }
+
+    .panel{
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      padding: 16px;
+      box-shadow: 0 0 0 1px rgba(41,255,122,.08) inset;
+    }
+    .panel h3{
+      margin:0 0 10px;
+      font-size: 12px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .qllist{
+      display:grid;
+      gap: 10px;
+    }
+    .ql{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(124,255,178,.20);
+      background: rgba(0,0,0,.20);
+      box-shadow: 0 0 0 1px rgba(41,255,122,.07) inset;
+    }
+    .ql b{
+      font-family: var(--sans);
+      font-weight: 650;
+    }
+    .ql span{
+      font-size: 12.5px;
+      color: var(--muted);
+      opacity: .9;
+    }
+
+    /* Sections */
+    section{
+      margin-top: 18px;
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(124,255,178,.18);
+      background: rgba(0,0,0,.22);
+      box-shadow: 0 0 0 1px rgba(41,255,122,.07) inset;
+      position:relative;
+      overflow:hidden;
+    }
+    section::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.12;
+      background: radial-gradient(500px 200px at 18% 0%, rgba(41,255,122,.25), transparent 60%),
+                  radial-gradient(520px 240px at 90% 10%, rgba(124,255,178,.18), transparent 55%);
+    }
+    section h2{
+      margin:0 0 10px;
+      font-size: 18px;
+      letter-spacing: .2px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      position:relative;
+    }
+    .sig{
+      font-size: 12px;
+      color: var(--dim);
+      border: 1px solid rgba(124,255,178,.20);
+      border-radius: 999px;
+      padding: 5px 8px;
+      background: rgba(0,0,0,.20);
+    }
+    .lead{
+      margin:0 0 14px;
+      color: var(--muted);
+      font-family: var(--sans);
+      max-width: 95ch;
+      position:relative;
+    }
+
+    .cols{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      position:relative;
+    }
+    @media (max-width: 920px){
+      .cols{ grid-template-columns: 1fr; }
+    }
+
+    ul{ margin:0; padding-left: 18px; }
+    li{ margin: 6px 0; font-family: var(--sans); }
+
+    /* Publications */
+    .pubs{ display:grid; gap: 12px; position:relative; }
+    .pub{
+      border-radius: 16px;
+      border: 1px solid rgba(124,255,178,.18);
+      background: rgba(0,0,0,.20);
+      padding: 14px;
+      box-shadow: 0 0 0 1px rgba(41,255,122,.06) inset;
+    }
+    .pub .title{
+      font-family: var(--sans);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .pub .venue{
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 13.5px;
+    }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .chip{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(124,255,178,.20);
+      background: rgba(0,0,0,.20);
+      color: var(--muted);
+    }
+
+    footer{
+      margin-top: 18px;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12.5px;
+      font-family: var(--sans);
+      opacity:.95;
+    }
+
+    .mono{ font-family: var(--mono); }
+    .muted{ color: var(--muted); }
+    .kbd{
+      font-family: var(--mono);
+      border: 1px solid rgba(124,255,178,.20);
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+    }
+
+    .skip{
+      position:absolute;
+      left:-999px;
+      top: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.35);
+      z-index: 99;
+      color: var(--text);
+    }
+    .skip:focus{ left: 14px; }
+
+    @media (prefers-reduced-motion: reduce){
+      canvas#rain{ display:none; }
+      .cursor{ animation: none; }
+      *{ scroll-behavior: auto !important; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Person",
+    "name":"Murat Ak",
+    "jobTitle":"Academic Researcher",
+    "url":"https://muratak.github.io/",
+    "sameAs":[
+      "https://scholar.google.com/citations?user=YOUR_ID",
+      "https://orcid.org/YOUR-ORCID",
+      "https://github.com/muratak"
+    ],
+    "knowsAbout":["Cryptography","Provable Security","Broadcast Encryption","Secure Protocols"]
+  }
+  </script>
+</head>
+
+<body>
+  <canvas id="rain" aria-hidden="true"></canvas>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <div class="wrap">
+    <header class="topbar">
+      <div class="bar">
+        <div class="brand">
+          <div class="sigil" aria-hidden="true">MA</div>
+          <div class="name">
+            <strong>Murat Ak</strong>
+            <span>cryptography • security proofs • protocols</span>
+          </div>
+        </div>
+
+        <nav aria-label="Primary">
+          <a class="pill" href="#about">/about</a>
+          <a class="pill" href="#research">/research</a>
+          <a class="pill" href="#publications">/pubs</a>
+          <a class="pill" href="#teaching">/teaching</a>
+          <a class="pill" href="#service">/service</a>
+          <a class="pill" href="#contact">/contact</a>
+        </nav>
+
+        <div class="actions">
+          <button class="btn" id="rainBtn" type="button" aria-label="Toggle code rain">
+            <span aria-hidden="true">⟲</span><span class="muted">rain</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="content">
+      <div class="hero">
+        <div class="scanline" aria-hidden="true"></div>
+        <div class="hero-inner">
+          <div>
+            <h1>Secure systems, proven in the game.</h1>
+            <p class="subtitle">
+              I am <b>Murat Ak</b>, an academic researcher in <b>cryptography</b> and <b>security</b>.
+              My work focuses on <b>provable security</b>, <b>broadcast encryption</b>, and the design/analysis of secure protocols—
+              bridging formal definitions with implementable constructions.
+            </p>
+
+            <div class="prompt">
+              <div class="cursor" aria-hidden="true"></div>
+              <div>
+                <span class="mono">murat@research</span><span class="muted">:</span><span class="mono">~</span><span class="muted">$</span>
+                <span class="mono"> verify --model game_based --assumption standard</span><br />
+                <span class="muted">output:</span> advantage ≤ ε(λ) under stated assumptions.
+              </div>
+            </div>
+
+            <div class="meta" aria-label="Highlights">
+              <div class="tag">IND-CPA / IND-CCA</div>
+              <div class="tag">EUF-CMA</div>
+              <div class="tag">Broadcast encryption</div>
+              <div class="tag">Protocol analysis</div>
+            </div>
+          </div>
+
+          <aside class="panel" aria-label="Quick links">
+            <h3>quicklinks</h3>
+            <div class="qllist">
+              <a class="ql" href="assets/CV.pdf"><b>CV</b><span class="mono">assets/CV.pdf →</span></a>
+              <a class="ql" href="https://github.com/muratak" target="_blank" rel="noopener"><b>GitHub</b><span>code →</span></a>
+              <a class="ql" href="https://scholar.google.com/" target="_blank" rel="noopener"><b>Scholar</b><span>papers →</span></a>
+              <a class="ql" href="https://orcid.org/" target="_blank" rel="noopener"><b>ORCID</b><span>id →</span></a>
+            </div>
+            <p class="muted" style="margin: 12px 0 0; font-family: var(--sans); font-size: 13px;">
+              Upload your CV as <span class="kbd">assets/CV.pdf</span> (optional).
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <section id="about">
+        <h2>About <span class="sig">whoami</span></h2>
+        <p class="lead">
+          <b>[Your Title]</b> at <b>[University / Department]</b>. I study formal security definitions and efficient cryptographic constructions.
+          My goal is to build systems whose guarantees remain clear under realistic adversarial models.
+        </p>
+        <div class="cols">
+          <div class="panel">
+            <h3>affiliation</h3>
+            <p style="margin:0; font-family: var(--sans);">
+              <b>[Your Title]</b><br />
+              <span class="muted">[Department / University]</span><br />
+              <span class="muted">[City, Country]</span>
+            </p>
+          </div>
+          <div class="panel">
+            <h3>interests</h3>
+            <ul>
+              <li>Provable security, reductions, game-based proofs</li>
+              <li>Broadcast encryption, revocation, access control</li>
+              <li>Protocol design, authentication, key management</li>
+              <li>(Optional) post-quantum crypto / privacy / applied security</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2>Research <span class="sig">focus</span></h2>
+        <p class="lead">
+          Replace these bullets with your current agenda (keep each point crisp and proof-oriented).
+        </p>
+        <div class="cols">
+          <div class="panel">
+            <h3>current directions</h3>
+            <ul>
+              <li><b>Broadcast encryption:</b> scalable constructions, revocation, efficient key updates.</li>
+              <li><b>Protocol security:</b> composability and realistic threat models.</li>
+              <li><b>Applied cryptography:</b> architecture decisions that preserve formal guarantees.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>keywords</h3>
+            <p class="muted" style="margin:0; font-family: var(--sans);">
+              indistinguishability, reductions, adversary advantage, access structures,
+              KEM/DEM, secure channels, key distribution, authentication
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="publications">
+        <h2>Publications <span class="sig">papers</span></h2>
+        <p class="lead">
+          Add selected publications with consistent formatting. Link out to Scholar/DBLP for the full list.
+        </p>
+
+        <div class="pubs">
+          <div class="pub">
+            <div class="title">Paper Title One (replace)</div>
+            <div class="venue">Conference/Journal • 2025 • with Coauthors</div>
+            <div class="chips">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">DOI</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">arXiv</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">BibTeX</a>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="title">Paper Title Two (replace)</div>
+            <div class="venue">Conference/Journal • 2024 • with Coauthors</div>
+            <div class="chips">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">DOI</a>
+            </div>
+          </div>
+
+          <div class="pub">
+            <div class="title">Survey / Technical Report (replace)</div>
+            <div class="venue">Preprint • 2023</div>
+            <div class="chips">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="lead" style="margin-top: 12px;">
+          Full list:
+          <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+          • <a href="https://dblp.org/" target="_blank" rel="noopener">DBLP</a>
+          • <a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a>
+        </p>
+      </section>
+
+      <section id="teaching">
+        <h2>Teaching <span class="sig">courses</span></h2>
+        <p class="lead">Keep it current and concise.</p>
+        <div class="cols">
+          <div class="panel">
+            <h3>courses</h3>
+            <ul>
+              <li>Cryptography & Network Security</li>
+              <li>Information Systems Security</li>
+              <li>(Optional) Programming Languages / Discrete Math</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>supervision</h3>
+            <ul>
+              <li>M.Sc./Ph.D. topics in applied & theoretical cryptography</li>
+              <li>Projects: protocol analysis, threat modeling, secure architectures</li>
+              <li>Send a brief proposal + relevant links</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="service">
+        <h2>Service <span class="sig">community</span></h2>
+        <p class="lead">Replace with your real service roles.</p>
+        <div class="cols">
+          <div class="panel">
+            <h3>reviewing</h3>
+            <ul>
+              <li>Conferences/journals: [replace]</li>
+              <li>Funding panels / committees: [replace]</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h3>outreach</h3>
+            <ul>
+              <li>Cybersecurity talks & training for industry</li>
+              <li>Student mentoring and research guidance</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact <span class="sig">ping</span></h2>
+        <p class="lead">Email is best. For collaboration requests, include a short summary and links.</p>
+        <div class="cols">
+          <div class="panel">
+            <h3>email</h3>
+            <p style="margin:0; font-family: var(--sans);">
+              <span class="muted">murat.ak [at] your-university.edu</span><br />
+              <span class="muted">Alternative:</span> <span class="muted">muratak [at] gmail.com</span>
+            </p>
+          </div>
+          <div class="panel">
+            <h3>profiles</h3>
+            <ul>
+              <li><a href="https://github.com/muratak" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>
+              <li><a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a></li>
+              <li><a href="https://dblp.org/" target="_blank" rel="noopener">DBLP</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> Murat Ak</div>
+        <div class="muted">Matrix-style single-file GitHub Pages • <span class="mono">index.html</span></div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Matrix-like code rain (lightweight)
+    (function(){
+      const canvas = document.getElementById("rain");
+      const ctx = canvas.getContext("2d");
+
+      // Characters: mix of katakana-like + digits + symbols for vibe
+      const chars = ("アイウエオカキクケコサシスセソタチツテトナニヌネノ" +
+                     "ハヒフヘホマミムメモヤユヨラリルレロワヲン" +
+                     "0123456789" +
+                     "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                     "@#$%&*+-=<>?/\\|").split("");
+
+      let w, h, cols, drops, fontSize;
+
+      function resize(){
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        w = Math.floor(window.innerWidth);
+        h = Math.floor(window.innerHeight);
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = w + "px";
+        canvas.style.height = h + "px";
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        fontSize = Math.max(14, Math.min(20, Math.floor(w / 70)));
+        cols = Math.floor(w / fontSize);
+        drops = new Array(cols).fill(0).map(() => Math.random() * h);
+        ctx.font = fontSize + "px ui-monospace, Menlo, Consolas, monospace";
+      }
+
+      function randChar(){
+        return chars[(Math.random() * chars.length) | 0];
+      }
+
+      let running = true;
+      const rainBtn = document.getElementById("rainBtn");
+      rainBtn.addEventListener("click", () => {
+        running = !running;
+        canvas.style.display = running ? "block" : "none";
+      });
+
+      function draw(){
+        if(!running) return requestAnimationFrame(draw);
+
+        // fade the whole canvas slightly to create trails
+        ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+        ctx.fillRect(0, 0, w, h);
+
+        // draw each column
+        for(let i=0; i<cols; i++){
+          const x = i * fontSize;
+          const y = drops[i];
+
+          // random brightness per char for depth
+          const bright = 0.35 + Math.random() * 0.55;
+          ctx.fillStyle = `rgba(124, 255, 178, ${bright})`;
+          ctx.fillText(randChar(), x, y);
+
+          // occasionally reset drop to the top
+          if(y > h && Math.random() > 0.985) drops[i] = -Math.random() * 200;
+          drops[i] += fontSize;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener("resize", resize, { passive:true });
+      resize();
+      // initial black fill
+      ctx.fillStyle = "rgba(0,0,0,1)";
+      ctx.fillRect(0, 0, w, h);
+      requestAnimationFrame(draw);
+    })();
+  </script>
+</body>
+</html>

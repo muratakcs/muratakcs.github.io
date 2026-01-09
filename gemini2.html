@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murat Ak | Crypto & Security</title>
+    <meta name="description" content="Academic Portfolio of Murat Ak.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-color: #0d1117;       /* GitHub Dark Dimmed */
+            --card-bg: #161b22;        /* Slightly lighter card */
+            --border: #30363d;         /* Subtle borders */
+            --accent: #2dba4e;         /* Success Green (Terminal style) */
+            --secondary: #58a6ff;      /* Tech Blue */
+            --text-main: #c9d1d9;      /* Off-white for readability */
+            --text-dim: #8b949e;       /* Comments/Meta data */
+            --font-mono: 'Fira Code', monospace;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* --- GLOBAL RESET --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: var(--secondary); transition: 0.2s; }
+        a:hover { color: var(--accent); text-decoration: underline; }
+
+        /* --- LAYOUT --- */
+        .wrapper {
+            width: 100%;
+            max-width: 850px;
+            padding: 40px 20px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        .terminal-badge {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: rgba(45, 186, 78, 0.1);
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid rgba(45, 186, 78, 0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-family: var(--font-mono);
+            color: var(--text-dim);
+            font-size: 1rem;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        nav a:hover, nav a.active {
+            color: #ffffff;
+            border-bottom: 2px solid var(--accent);
+            text-decoration: none;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Stagger animations */
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.3s; }
+
+        h2 {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            color: #ffffff;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "./";
+            color: var(--accent);
+            margin-right: 10px;
+            opacity: 0.7;
+        }
+
+        p { margin-bottom: 15px; }
+
+        /* --- CARDS (Projects/Papers) --- */
+        .card-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 6px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .card-meta {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+        }
+
+        .card-tags {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            background: rgba(88, 166, 255, 0.1);
+            color: var(--secondary);
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            margin-top: auto;
+            padding: 40px 0;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            border-top: 1px solid var(--border);
+            width: 100%;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            nav { flex-wrap: wrap; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+
+    <header>
+        <span class="terminal-badge">root@muratak:~</span>
+        <h1>Murat Ak</h1>
+        <div class="subtitle">
+            <span style="color: var(--secondary);">const</span> role = "Academic & Cryptography Researcher";<br>
+            <span style="color: var(--secondary);">const</span> dept = "Computer Engineering";
+        </div>
+
+        <nav>
+            <a href="#bio" class="active">01_bio</a>
+            <a href="#research">02_research</a>
+            <a href="#publications">03_publications</a>
+            <a href="#contact">04_connect</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="bio">
+            <h2>bio</h2>
+            <p>
+                Hello. I am an academic in the Department of Computer Engineering. My work exists at the intersection of <strong>Cryptography</strong>, <strong>Game Theory</strong>, and <strong>Distributed Systems</strong>.
+            </p>
+            <p>
+                I focus on designing secure protocols for the next generation of digital infrastructure. Currently, I am exploring how blockchain incentives can be modeled using game theory to solve real-world problems (such as carbon footprint reduction).
+            </p>
+        </section>
+
+        <section id="research">
+            <h2>research_stack</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Applied Cryptography</span>
+                        <i class="fas fa-lock" style="color: var(--text-dim)"></i>
+                    </div>
+                    <p style="font-size: 0.95rem;">
+                        Privacy-preserving mechanisms, Zero-Knowledge Proofs, and post-quantum security standards.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">ZK-Snarks</span>
+                        <span class="tag">MPC</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Blockchain & Green Tech</span>
+                        <i class="fas fa-link" style="color: var(--text-dim)"></i>
+                    </div>
+                    <p style="font-size: 0.95rem;">
+                        Developing consensus algorithms and reward systems to incentivize carbon footprint reduction in industrial applications.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Distributed Ledger</span>
+                        <span class="tag">Sustainability</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Game Theoretic Security</span>
+                        <i class="fas fa-chess-knight" style="color: var(--text-dim)"></i>
+                    </div>
+                    <p style="font-size: 0.95rem;">
+                        Modeling attacker/defender scenarios and Nash Equilibria in network security and protocol design.
+                    </p>
+                    <div class="card-tags">
+                        <span class="tag">Nash Equilibrium</span>
+                        <span class="tag">Mechanism Design</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications">
+            <h2>publications</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Blockchain-based Reward Systems for Tourism Carbon Reduction</span>
+                        <span class="card-meta">2026</span>
+                    </div>
+                    <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 10px;">
+                        <em>Murat Ak</em>, et al.
+                    </p>
+                    <p style="font-size: 0.9rem;">
+                        Proposed a novel tokenomics model to incentivize sustainable tourism practices using smart contracts.
+                    </p>
+                    <div class="card-tags">
+                        <a href="#" class="tag" style="text-decoration: none;">[ PDF ]</a>
+                        <a href="#" class="tag" style="text-decoration: none;">[ Cite ]</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Game Theory in Network Defense Strategies</span>
+                        <span class="card-meta">2025</span>
+                    </div>
+                    <p style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 10px;">
+                        <em>Murat Ak</em>, Co-Author.
+                    </p>
+                    <p style="font-size: 0.9rem;">
+                        Published in <em>IEEE Transactions on Information Forensics and Security</em>.
+                    </p>
+                    <div class="card-tags">
+                        <a href="#" class="tag" style="text-decoration: none;">[ DOI ]</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>init_connection</h2>
+            <p>
+                I am open to academic collaboration and consulting on security architecture.
+            </p>
+            
+            <div style="margin-top: 20px; font-family: var(--font-mono); background: var(--card-bg); padding: 20px; border-radius: 6px; border: 1px solid var(--border);">
+                <span style="color: var(--secondary)">$</span> email: <span style="color: #ffffff">murat.ak [at] university.edu</span><br>
+                <span style="color: var(--secondary)">$</span> office: <span style="color: #ffffff">Engineering Bldg, Room 304</span><br>
+                <span style="color: var(--secondary)">$</span> gpg_key: <a href="#">0x9A...F3</a>
+            </div>
+
+            <div style="margin-top: 30px; display: flex; gap: 20px;">
+                <a href="https://github.com/muratak" style="font-size: 1.5rem;"><i class="fab fa-github"></i></a>
+                <a href="#" style="font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
+                <a href="#" style="font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="font-size: 1.5rem;"><i class="fas fa-graduation-cap"></i></a>
+            </div>
+        </section>
+
+    </main>
+
+</div>
+
+<footer>
+    <p>git checkout -b future<br>&copy; 2026 Murat Ak</p>
+</footer>
+
+</body>
+</html>

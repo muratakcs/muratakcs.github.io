@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murat Ak | Cryptography Researcher</title>
+    <meta name="description" content="Academic website of Murat Ak, Cryptography Researcher and Computer Engineer.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Dark Blue/Grey - Professional */
+            --accent-color: #2980b9; /* Academic Blue */
+            --bg-color: #fcfcfc;
+            --text-color: #333;
+            --light-text: #666;
+            --border-color: #eaeaea;
+        }
+
+        body {
+            font-family: 'Merriweather', serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, nav a {
+            font-family: 'Roboto', sans-serif;
+            color: var(--primary-color);
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.03);
+            min-height: 100vh;
+        }
+
+        /* Header & Nav */
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .name-title h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .name-title p {
+            margin: 5px 0 0;
+            color: var(--light-text);
+            font-size: 1.1rem;
+        }
+
+        nav {
+            margin-top: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            margin-left: 20px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* About Section layout */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 30px;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            /* Placeholder background if no image yet */
+            background-color: #eee; 
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+        }
+
+        /* Lists (News, Papers) */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        .date {
+            font-weight: bold;
+            font-family: 'Roboto', sans-serif;
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+
+        .paper-title {
+            font-weight: bold;
+        }
+
+        .paper-venue {
+            font-style: italic;
+            color: var(--light-text);
+        }
+
+        .links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Contact & Footer */
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 20px;
+            color: var(--primary-color);
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent-color);
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+            color: #999;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav {
+                margin-top: 20px;
+            }
+            nav a {
+                margin-left: 0;
+                margin-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header>
+        <div class="name-title">
+            <h1>Murat Ak</h1>
+            <p>Assistant Professor of Computer Engineering<br>Cryptography & Security Researcher</p>
+        </div>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#publications">Publications</a>
+            <a href="#teaching">Teaching</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about">
+            <div class="about-grid">
+                <div class="profile-container">
+                    <img src="https://via.placeholder.com/200x250?text=Murat+Ak" alt="Murat Ak" class="profile-pic">
+                    <br>
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a href="#" style="text-decoration: none; color: var(--accent-color); font-family: Roboto; font-weight: bold; font-size: 0.9rem;">[ Download CV ]</a>
+                    </div>
+                </div>
+
+                <div class="bio">
+                    <p>
+                        I am an academic in the Department of Computer Engineering. My research primarily focuses on <strong>Applied Cryptography</strong>, <strong>Network Security</strong>, and <strong>Privacy-Preserving Technologies</strong>.
+                    </p>
+                    <p>
+                        Currently, I am investigating efficient cryptographic protocols for constrained environments and the intersection of Game Theory and Security. I obtained my Ph.D. in Computer Engineering.
+                    </p>
+                    
+                    <h3>Research Interests</h3>
+                    <ul style="list-style-type: square; padding-left: 20px;">
+                        <li>Post-Quantum Cryptography</li>
+                        <li>Blockchain & Distributed Ledger Technologies</li>
+                        <li>Game Theoretic Approaches to Security</li>
+                        <li>Secure Multi-party Computation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="news">
+            <h2>Recent News</h2>
+            <ul>
+                <li>
+                    <span class="date">Jan 2026</span> 
+                    Project on Blockchain-based tourism systems funded.
+                </li>
+                <li>
+                    <span class="date">Dec 2025</span> 
+                    New paper accepted at <em>IEEE S&P 2026</em>.
+                </li>
+                <li>
+                    <span class="date">Sep 2025</span> 
+                    Joined the Technical Program Committee for CCS 2025.
+                </li>
+            </ul>
+        </section>
+
+        <section id="publications">
+            <h2>Selected Publications</h2>
+            <p style="font-size: 0.9rem; color: #666;">* Indicates equal contribution.</p>
+            
+            <ul>
+                <li>
+                    <span class="paper-title">"Efficient Zero-Knowledge Proofs for Distributed Systems"</span><br>
+                    <strong>Murat Ak</strong>, Co-author Name.<br>
+                    <span class="paper-venue">Proceedings of the ACM SIGSAC Conference on Computer and Communications Security (CCS), 2025.</span><br>
+                    <div class="links">
+                        <a href="#">[PDF]</a> <a href="#">[Code]</a> <a href="#">[BibTeX]</a>
+                    </div>
+                </li>
+
+                <li>
+                    <span class="paper-title">"Game Theoretic Analysis of Network Intrusion Detection"</span><br>
+                    Co-author Name, <strong>Murat Ak</strong>.<br>
+                    <span class="paper-venue">IEEE Transactions on Information Forensics and Security, 2024.</span><br>
+                    <div class="links">
+                        <a href="#">[PDF]</a> <a href="#">[Publisher]</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <span class="paper-title">"A Novel Approach to Carbon Footprint Reduction using Blockchain"</span><br>
+                    <strong>Murat Ak</strong>, Student Name.<br>
+                    <span class="paper-venue">International Conference on Blockchain Technology, 2024.</span><br>
+                    <div class="links">
+                        <a href="#">[PDF]</a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section id="teaching">
+            <h2>Teaching</h2>
+            <ul>
+                <li><strong>CENG 401:</strong> Cryptography and Network Security (Fall 2025)</li>
+                <li><strong>CENG 302:</strong> Introduction to Game Theory (Spring 2025)</li>
+                <li><strong>CENG 101:</strong> Introduction to Computer Engineering (Fall 2024)</li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>
+                <strong>Email:</strong> murat.ak [at] university.edu<br>
+                <strong>Office:</strong> Engineering Building, Room 304
+            </p>
+            
+            <div class="social-icons">
+                <a href="https://github.com/muratak" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" target="_blank" title="Google Scholar">
+                    <i class="fas fa-graduation-cap"></i>
+                </a>
+                <a href="#" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" target="_blank" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Murat Ak. Hosted on GitHub Pages.</p>
+    </footer>
+
+</div>
+
+</body>
+</html>

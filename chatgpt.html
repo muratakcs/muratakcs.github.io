@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+
+  <title>Murat Ak — Cryptography Researcher</title>
+  <meta name="description" content="Murat Ak — academic researcher in cryptography and security. Research, publications, teaching, and contact." />
+  <link rel="canonical" href="https://muratak.github.io/" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="Murat Ak — Cryptography Researcher" />
+  <meta property="og:description" content="Academic researcher in cryptography and security. Research, publications, teaching, and contact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://muratak.github.io/" />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- Minimal favicon (inline SVG) -->
+  <link rel="icon" href='data:image/svg+xml;utf8,
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <rect width="64" height="64" rx="14" fill="%23111"/>
+      <path d="M20 28a12 12 0 1 1 24 0v8h2a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V40a4 4 0 0 1 4-4h2v-8zm6 0v8h12v-8a6 6 0 1 0-12 0z" fill="%23fff"/>
+    </svg>' />
+
+  <style>
+    :root{
+      --bg: #0b0c10;
+      --panel: #11131a;
+      --text: #e9eef5;
+      --muted: #b6c2d1;
+      --border: rgba(255,255,255,.10);
+      --accent: #7dd3fc;  /* subtle cyan */
+      --accent2:#a78bfa;  /* subtle violet */
+      --shadow: 0 12px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+      --maxw: 1020px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    /* Light theme */
+    [data-theme="light"]{
+      --bg: #fafafa;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --muted: #445269;
+      --border: rgba(0,0,0,.10);
+      --shadow: 0 12px 30px rgba(0,0,0,.10);
+      --accent: #0284c7;
+      --accent2:#6d28d9;
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(125,211,252,.18), transparent 60%),
+                  radial-gradient(900px 500px at 90% 0%, rgba(167,139,250,.14), transparent 55%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      letter-spacing: .1px;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+    .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 28px 18px 80px; }
+
+    /* Top bar */
+    .topbar{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      padding: 14px 0;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(0,0,0,.30), transparent);
+      z-index: 10;
+    }
+    [data-theme="light"] .topbar{
+      background: linear-gradient(to bottom, rgba(250,250,250,.85), transparent);
+    }
+
+    .brand{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 220px;
+    }
+    .logo{
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      font-family: var(--mono);
+      font-weight: 700;
+      color: #081019;
+    }
+    .brand .name{
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .brand .name strong{ font-size: 14.5px; }
+    .brand .name span{ font-size: 12.5px; color: var(--muted); }
+
+    nav{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .pill{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      font-size: 13px;
+      color: var(--muted);
+      transition: transform .15s ease, background .15s ease;
+    }
+    [data-theme="light"] .pill{ background: rgba(0,0,0,.03); }
+    .pill:hover{
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.08);
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .actions{
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 96px;
+      justify-content: flex-end;
+    }
+    .btn{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 9px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    [data-theme="light"] .btn{ background: rgba(0,0,0,.03); }
+    .btn:hover{ background: rgba(255,255,255,.08); }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    [data-theme="light"] .hero{
+      background: linear-gradient(180deg, rgba(0,0,0,.03), rgba(0,0,0,.01));
+    }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 22px;
+      align-items: start;
+    }
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+      .actions{ min-width: unset; }
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: clamp(26px, 3.2vw, 40px);
+      letter-spacing: -0.6px;
+      line-height: 1.15;
+    }
+    .subtitle{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 15.5px;
+      max-width: 62ch;
+    }
+
+    .meta{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+    .tag{
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+    }
+    [data-theme="light"] .tag{ background: rgba(0,0,0,.02); }
+
+    .card{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+    }
+    [data-theme="light"] .card{ background: rgba(0,0,0,.02); }
+
+    .card h3{
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .quicklinks{
+      display: grid;
+      gap: 10px;
+    }
+    .ql{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+    }
+    [data-theme="light"] .ql{ background: rgba(0,0,0,.02); }
+    .ql span{ color: var(--muted); font-size: 13px; }
+    .ql b{ font-weight: 600; }
+
+    /* Sections */
+    section{
+      margin-top: 22px;
+      padding: 22px 22px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+    }
+    [data-theme="light"] section{ background: rgba(0,0,0,.02); }
+
+    section h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: .2px;
+    }
+    .lead{
+      margin: 0 0 14px;
+      color: var(--muted);
+      max-width: 85ch;
+    }
+
+    .two{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 860px){
+      .two{ grid-template-columns: 1fr; }
+    }
+
+    ul.clean{
+      margin: 0;
+      padding-left: 18px;
+    }
+    .pub{
+      display: grid;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .pubitem{
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 12px;
+      background: rgba(255,255,255,.02);
+    }
+    [data-theme="light"] .pubitem{ background: rgba(0,0,0,.015); }
+    .pubitem .title{
+      font-weight: 650;
+      margin-bottom: 4px;
+    }
+    .pubitem .venue{
+      color: var(--muted);
+      font-size: 13.5px;
+    }
+    .pubitem .links{
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,.03);
+    }
+    [data-theme="light"] .chip{ background: rgba(0,0,0,.02); }
+
+    footer{
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* Accessibility */
+    .skip{
+      position: absolute;
+      left: -999px;
+      top: 8px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 10px;
+      z-index: 999;
+    }
+    .skip:focus{ left: 12px; }
+
+    /* Small helper */
+    .muted{ color: var(--muted); }
+    .mono{ font-family: var(--mono); }
+  </style>
+
+  <!-- JSON-LD for SEO (edit your real identifiers) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Murat Ak",
+    "jobTitle": "Academic Researcher",
+    "url": "https://muratak.github.io/",
+    "sameAs": [
+      "https://scholar.google.com/citations?user=YOUR_ID",
+      "https://orcid.org/YOUR-ORCID",
+      "https://github.com/muratak"
+    ],
+    "knowsAbout": ["Cryptography", "Provable Security", "Broadcast Encryption", "Secure Protocols"]
+  }
+  </script>
+</head>
+
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">MA</div>
+        <div class="name">
+          <strong>Murat Ak</strong>
+          <span>Cryptography & Security</span>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a class="pill" href="#about">About</a>
+        <a class="pill" href="#research">Research</a>
+        <a class="pill" href="#publications">Publications</a>
+        <a class="pill" href="#teaching">Teaching</a>
+        <a class="pill" href="#service">Service</a>
+        <a class="pill" href="#contact">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn" id="themeBtn" type="button" aria-label="Toggle theme">
+          <span aria-hidden="true">◐</span>
+          <span class="muted">Theme</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="content">
+      <div class="hero">
+        <div class="grid">
+          <div>
+            <h1>Murat Ak</h1>
+            <p class="subtitle">
+              I work on <b>cryptography</b> and <b>security</b>, with a focus on
+              <b>provable security</b>, <b>broadcast encryption</b>, and the design/analysis of secure protocols.
+              I also enjoy bridging theory with practical systems and education.
+            </p>
+
+            <div class="meta" aria-label="Highlights">
+              <div class="tag">🔐 Provable security</div>
+              <div class="tag">📡 Broadcast encryption</div>
+              <div class="tag">🧩 Protocol design</div>
+              <div class="tag">🎓 Teaching & mentoring</div>
+            </div>
+          </div>
+
+          <aside class="card" aria-label="Quick links">
+            <h3>Quick links</h3>
+            <div class="quicklinks">
+              <a class="ql" href="https://github.com/muratak" target="_blank" rel="noopener">
+                <b>GitHub</b> <span>code & projects →</span>
+              </a>
+              <a class="ql" href="https://scholar.google.com/" target="_blank" rel="noopener">
+                <b>Google Scholar</b> <span>publications →</span>
+              </a>
+              <a class="ql" href="https://orcid.org/" target="_blank" rel="noopener">
+                <b>ORCID</b> <span>research profile →</span>
+              </a>
+              <a class="ql" href="#contact">
+                <b>Contact</b> <span>email & links →</span>
+              </a>
+              <a class="ql" href="assets/CV.pdf">
+                <b>CV (PDF)</b> <span class="mono">assets/CV.pdf →</span>
+              </a>
+            </div>
+            <p class="muted" style="margin: 12px 0 0; font-size: 13px;">
+              Tip: upload your CV as <span class="mono">assets/CV.pdf</span> (optional).
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <section id="about">
+        <h2>About</h2>
+        <p class="lead">
+          I am an academic researcher in cryptography and security. My work emphasizes formal security definitions,
+          reductions, and practical constructions that remain meaningful under realistic threat models.
+        </p>
+        <div class="two">
+          <div class="card">
+            <h3>Affiliation</h3>
+            <p style="margin: 0;">
+              <b>[Your Title]</b><br />
+              <span class="muted">[Department / University]</span><br />
+              <span class="muted">[City, Country]</span>
+            </p>
+          </div>
+          <div class="card">
+            <h3>Interests</h3>
+            <ul class="clean">
+              <li>Provable security, reductions, game-based proofs</li>
+              <li>Broadcast encryption, access control, key management</li>
+              <li>Applied cryptography and secure system design</li>
+              <li>(Optional) Post-quantum cryptography / privacy / blockchain</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="research">
+        <h2>Research</h2>
+        <p class="lead">
+          Selected themes and directions. Replace these bullets with your actual current agenda and (optionally) links to preprints.
+        </p>
+        <div class="two">
+          <div class="card">
+            <h3>Current directions</h3>
+            <ul class="clean">
+              <li><b>Broadcast encryption:</b> scalable constructions, revocation, and efficient key updates.</li>
+              <li><b>Protocol security:</b> designing and proving security for multi-party and hybrid systems.</li>
+              <li><b>Security engineering:</b> translating formal goals into implementable system architectures.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Keywords</h3>
+            <p class="muted" style="margin:0;">
+              encryption, security proofs, indistinguishability, reductions, threat models, authentication, key distribution,
+              access control, efficient cryptographic constructions
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="publications">
+        <h2>Publications</h2>
+        <p class="lead">
+          Add your real publications below (keep it short here, link to Scholar for the full list).
+          Use consistent formatting (title, venue, year) and add PDF/DOI/arXiv links when possible.
+        </p>
+
+        <div class="pub">
+          <div class="pubitem">
+            <div class="title">Paper Title One (replace)</div>
+            <div class="venue">Conference/Journal • 2025 • with Coauthors</div>
+            <div class="links">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">DOI</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">arXiv</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">BibTeX</a>
+            </div>
+          </div>
+
+          <div class="pubitem">
+            <div class="title">Paper Title Two (replace)</div>
+            <div class="venue">Conference/Journal • 2024 • with Coauthors</div>
+            <div class="links">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">DOI</a>
+            </div>
+          </div>
+
+          <div class="pubitem">
+            <div class="title">Survey / Technical Report (replace)</div>
+            <div class="venue">Preprint • 2023</div>
+            <div class="links">
+              <a class="chip" href="#" target="_blank" rel="noopener">PDF</a>
+              <a class="chip" href="#" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top: 14px;">
+          Full list: <a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a>
+          • <a href="https://dblp.org/" target="_blank" rel="noopener">DBLP</a>
+          • <a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a>
+        </p>
+      </section>
+
+      <section id="teaching">
+        <h2>Teaching</h2>
+        <p class="lead">
+          Courses, topics, and supervision. Keep it concise and current.
+        </p>
+        <div class="two">
+          <div class="card">
+            <h3>Recent courses</h3>
+            <ul class="clean">
+              <li>Cryptography & Network Security (Undergraduate)</li>
+              <li>Information Systems Security (Undergraduate/Graduate)</li>
+              <li>(Optional) Programming Languages / Discrete Mathematics</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Supervision</h3>
+            <ul class="clean">
+              <li>M.Sc./Ph.D. topics in applied & theoretical cryptography</li>
+              <li>Projects: protocol analysis, threat modeling, secure architectures</li>
+              <li>Contact me if you are interested in thesis collaboration</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="service">
+        <h2>Service</h2>
+        <p class="lead">
+          Editorial, reviewing, program committees, community and institutional service.
+        </p>
+        <div class="two">
+          <div class="card">
+            <h3>Reviewing</h3>
+            <ul class="clean">
+              <li>Conferences/journals: [replace with actual venues]</li>
+              <li>Funding panels / institutional committees: [replace]</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Community</h3>
+            <ul class="clean">
+              <li>Workshop organizing / session chairing: [replace]</li>
+              <li>Outreach: cybersecurity talks & training: [replace]</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p class="lead">
+          Best way to reach me is email. For collaborations, include a short summary and relevant links.
+        </p>
+        <div class="two">
+          <div class="card">
+            <h3>Email</h3>
+            <p style="margin: 0;">
+              <span class="muted">murat.ak [at] your-university.edu</span><br />
+              <span class="muted">Alternative:</span> <span class="muted">muratak [at] gmail.com</span>
+            </p>
+          </div>
+          <div class="card">
+            <h3>Profiles</h3>
+            <ul class="clean">
+              <li><a href="https://github.com/muratak" target="_blank" rel="noopener">GitHub</a></li>
+              <li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></li>
+              <li><a href="https://orcid.org/" target="_blank" rel="noopener">ORCID</a></li>
+              <li><a href="https://dblp.org/" target="_blank" rel="noopener">DBLP</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div>© <span id="year"></span> Murat Ak</div>
+        <div class="muted">Built for GitHub Pages • <span class="mono">index.html</span></div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // Theme: default to system, allow toggle and persist.
+    (function () {
+      const key = "theme";
+      const root = document.documentElement;
+      const btn = document.getElementById("themeBtn");
+
+      function systemPrefersLight(){
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      }
+
+      function applyTheme(theme){
+        if (theme === "light" || theme === "dark") {
+          root.setAttribute("data-theme", theme);
+        } else {
+          root.removeAttribute("data-theme");
+        }
+      }
+
+      function currentTheme(){
+        return localStorage.getItem(key) || "system";
+      }
+
+      function nextTheme(theme){
+        // cycle: system -> dark -> light -> system ...
+        if (theme === "system") return "dark";
+        if (theme === "dark") return "light";
+        return "system";
+      }
+
+      function label(theme){
+        if (theme === "system") return "Theme: System";
+        if (theme === "dark") return "Theme: Dark";
+        return "Theme: Light";
+      }
+
+      function set(theme){
+        localStorage.setItem(key, theme);
+        if (theme === "system") applyTheme(systemPrefersLight() ? "light" : "dark");
+        else applyTheme(theme);
+        btn.setAttribute("title", label(theme));
+      }
+
+      // init
+      const initial = currentTheme();
+      set(initial);
+
+      // react to system changes if in system mode
+      if (window.matchMedia) {
+        window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+          if (currentTheme() === "system") set("system");
+        });
+      }
+
+      btn.addEventListener("click", () => {
+        const t = currentTheme();
+        set(nextTheme(t));
+      });
+    })();
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

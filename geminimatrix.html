@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murat Ak | System Access</title>
+    <meta name="description" content="Academic Portfolio of Murat Ak - Cryptography">
+
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --matrix-dark: #003b00;
+            --text-color: #dcdcdc; /* Slightly white for readability */
+            --bg-black: #000000;
+            --terminal-bg: rgba(0, 10, 0, 0.92);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-black);
+            color: var(--text-color);
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- BACKGROUND RAIN CANVAS --- */
+        canvas {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Behind everything */
+        }
+
+        /* --- TERMINAL CONTAINER --- */
+        .terminal-window {
+            max-width: 900px;
+            margin: 50px auto;
+            border: 1px solid var(--matrix-green);
+            background-color: var(--terminal-bg);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            padding: 2px; /* Inner border gap */
+            position: relative;
+        }
+
+        /* Scanline effect overlay */
+        .terminal-window::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .terminal-header {
+            background: var(--matrix-green);
+            color: black;
+            padding: 5px 15px;
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-body {
+            padding: 40px;
+            position: relative;
+            z-index: 3; /* Above scanlines for text selection */
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1 {
+            color: var(--matrix-green);
+            font-family: 'VT323', monospace;
+            font-size: 3.5rem;
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--matrix-green);
+            line-height: 1;
+        }
+
+        h2 {
+            border-bottom: 1px solid var(--matrix-dark);
+            color: var(--matrix-green);
+            font-size: 1.5rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+        }
+        
+        h2::before { content: ">> "; }
+
+        p { line-height: 1.6; margin-bottom: 20px; font-size: 1.1rem; }
+
+        strong { color: #fff; }
+
+        a { color: var(--matrix-green); text-decoration: none; border-bottom: 1px dashed var(--matrix-green); transition: 0.3s; }
+        a:hover { background: var(--matrix-green); color: black; box-shadow: 0 0 10px var(--matrix-green); }
+
+        /* --- NAVIGATION --- */
+        nav { margin-top: 20px; margin-bottom: 40px; }
+        nav ul { list-style: none; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
+        nav li a { 
+            font-family: 'VT323', monospace; 
+            font-size: 1.4rem; 
+            border: 1px solid var(--matrix-green); 
+            padding: 5px 15px;
+            text-transform: uppercase;
+        }
+
+        /* --- GLITCH TEXT EFFECT --- */
+        .glitch-wrapper { display: inline-block; }
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- DATA CARDS (Publications) --- */
+        .data-block {
+            border-left: 2px solid var(--matrix-dark);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            transition: border-left 0.3s;
+        }
+        .data-block:hover { border-left: 2px solid var(--matrix-green); }
+
+        .meta-tag {
+            font-size: 0.9rem;
+            color: #888;
+            font-family: 'VT323', monospace;
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 20px;
+            border: none;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .terminal-window { margin: 0; border: none; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span>USER: MURAT_AK // ROLE: CRYPTOGRAPHY_RESEARCHER</span>
+            <span>STATUS: CONNECTED</span>
+        </div>
+        
+        <div class="terminal-body">
+            
+            <header>
+                <div class="glitch-wrapper">
+                    <h1>Murat Ak<span class="blinking-cursor">_</span></h1>
+                </div>
+                <p style="color: var(--matrix-green); font-size: 1.2rem;">
+                    Dept. of Computer Engineering | Ph.D.
+                </p>
+
+                <nav>
+                    <ul>
+                        <li><a href="#identity">[ Identity ]</a></li>
+                        <li><a href="#protocols">[ Research ]</a></li>
+                        <li><a href="#logs">[ Papers ]</a></li>
+                        <li><a href="#uplink">[ Uplink ]</a></li>
+                    </ul>
+                </nav>
+            </header>
+
+            <section id="identity">
+                <h2>System Identity</h2>
+                <p>
+                    Welcome to the construct. I am an academic specializing in <strong>Applied Cryptography</strong>, <strong>Game Theory</strong>, and <strong>Distributed Systems</strong>.
+                </p>
+                <p>
+                    My primary directive is the design of secure protocols for constrained environments and analyzing the strategic behavior of attackers via Game Theoretic models.
+                </p>
+            </section>
+
+            <section id="protocols">
+                <h2>Active Protocols</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="border: 1px solid var(--matrix-dark); padding: 15px;">
+                        <strong style="color: var(--matrix-green);">Protocol: ZK-PROOFS</strong><br>
+                        <span class="meta-tag">Status: COMPILING...</span>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Researching Zero-Knowledge proofs for privacy in distributed ledger technologies.</p>
+                    </div>
+                    <div style="border: 1px solid var(--matrix-dark); padding: 15px;">
+                        <strong style="color: var(--matrix-green);">Protocol: GREEN_CHAIN</strong><br>
+                        <span class="meta-tag">Status: DEPLOYED</span>
+                        <p style="font-size: 0.9rem; margin-top: 10px;">Algorithmic solutions for reducing carbon footprint in tourism via Blockchain incentives.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="logs">
+                <h2>System Logs (Publications)</h2>
+                
+                <div class="data-block">
+                    <span class="meta-tag">0x2026 // BLOCKCHAIN_CONF</span><br>
+                    <strong>"Blockchain-based Reward Systems for Tourism Carbon Reduction"</strong><br>
+                    <span style="font-size: 0.9rem;">Murat Ak, et al.</span><br>
+                    <a href="#">[ Download Source ]</a>
+                </div>
+
+                <div class="data-block">
+                    <span class="meta-tag">0x2025 // IEEE_TIFS</span><br>
+                    <strong>"Game Theoretic Analysis of Network Intrusion Detection"</strong><br>
+                    <span style="font-size: 0.9rem;">Co-Author, Murat Ak.</span><br>
+                    <a href="#">[ Access Data ]</a>
+                </div>
+            </section>
+
+            <section id="uplink">
+                <h2>Establish Uplink</h2>
+                <p>
+                    <span style="color: var(--matrix-green);">root@muratak:~$</span> send_mail --to "murat.ak@university.edu"
+                </p>
+                
+                <div class="social-icons" style="margin-top: 20px;">
+                    <a href="https://github.com/muratak" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="#" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </section>
+            
+            <footer style="margin-top: 50px; font-size: 0.8rem; color: #555; text-align: center;">
+                -- END OF LINE --<br>
+                &copy; 2026 Murat Ak. System Version 1.0.
+            </footer>
+
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Full screen canvas
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Characters: Katakana + Latin + Numbers + Math symbols for that "Academic Crypto" vibe
+        const chars = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ∑∫π≠∞';
+        const charArray = chars.split('');
+
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+
+        // Array for drops - one per column
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            // Black BG for the canvas
+            // Translucent BG to show trail
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0'; // Green text
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = charArray[Math.floor(Math.random() * charArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                // Sending the drop back to the top randomly after it has crossed the screen
+                // Adding a randomness to the reset to make the drops scattered on the Y axis
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+                    drops[i] = 0;
+
+                // Incrementing Y coordinate
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+    </script>
+</body>
+</html>

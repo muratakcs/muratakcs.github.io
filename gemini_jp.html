@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murat Ak | Cryptography</title>
+    <meta name="description" content="Academic Portfolio of Murat Ak.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* Japanese Traditional Colors */
+            --bg-color: #fcfaf7;       /* Gofun-iro (Chalk White/Paper) */
+            --text-ink: #2b2b2b;       /* Sumi-iro (Ink Black) */
+            --accent-red: #ba2636;     /* Akabeni (Crimson/Seal Color) */
+            --accent-indigo: #2e3b4e;  /* Kachi-iro (Dark Indigo) */
+            --line-color: #e0deda;
+            
+            --font-serif: 'Shippori Mincho', serif;
+            --font-sans: 'Lato', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-ink);
+            font-family: var(--font-sans);
+            margin: 0;
+            padding: 0;
+            line-height: 1.8;
+            overflow-x: hidden;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+
+        /* Layout Grid */
+        .layout {
+            display: grid;
+            grid-template-columns: 100px 1fr; /* Side bar + Main content */
+            min-height: 100vh;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- VERTICAL SIDEBAR (The "Tategaki" feel) --- */
+        .sidebar {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            border-right: 1px solid var(--line-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        .hanko-seal {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--accent-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-red);
+            font-family: var(--font-serif);
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            /* Subtle rotation for organic feel */
+            transform: rotate(-5deg); 
+            background: rgba(186, 38, 54, 0.05);
+        }
+
+        nav {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            display: flex;
+            gap: 30px;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-ink);
+            font-family: var(--font-serif);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s, transform 0.3s;
+            opacity: 0.6;
+        }
+
+        nav a:hover {
+            color: var(--accent-red);
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .content {
+            padding: 80px 60px;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: var(--text-ink);
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            color: var(--accent-indigo);
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            opacity: 0.8;
+            display: block;
+        }
+
+        /* Decorative Line (Asymmetry) */
+        .divider-line {
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent-red);
+            margin-bottom: 40px;
+        }
+
+        /* Typography for Headers */
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--accent-indigo);
+            padding-left: 15px;
+            line-height: 1.2;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: #4a4a4a;
+            font-weight: 300;
+        }
+
+        /* Publication List Style */
+        .pub-item {
+            margin-bottom: 35px;
+            padding-left: 20px;
+            border-left: 1px solid transparent;
+            transition: border-left 0.3s;
+        }
+
+        .pub-item:hover {
+            border-left: 1px solid var(--accent-red);
+        }
+
+        .pub-year {
+            display: block;
+            font-family: var(--font-serif);
+            font-size: 0.85rem;
+            color: var(--accent-red);
+            margin-bottom: 5px;
+        }
+
+        .pub-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .pub-venue {
+            font-style: italic;
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .links a {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-indigo);
+            text-decoration: none;
+            margin-right: 15px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .links a:hover {
+            border-bottom: 1px solid var(--accent-red);
+        }
+
+        /* Contact Area */
+        .contact-box {
+            background-color: #fff;
+            padding: 30px;
+            border: 1px solid #eee;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+        }
+
+        .social-links {
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text-ink);
+            margin-right: 25px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-red);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 80px;
+            font-size: 0.8rem;
+            color: #999;
+            font-family: var(--font-serif);
+        }
+
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 768px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: relative;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--line-color);
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 20px;
+            }
+            nav {
+                writing-mode: horizontal-tb;
+                gap: 20px;
+            }
+            .hanko-seal {
+                margin-bottom: 0;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .content {
+                padding: 40px 20px;
+            }
+            h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout">
+    
+    <aside class="sidebar">
+        <div class="hanko-seal">Ak</div>
+        
+        <nav>
+            <a href="#about">About</a>
+            <a href="#research">Research</a>
+            <a href="#publications">Papers</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+        
+        <header>
+            <div class="divider-line"></div>
+            <h1>Murat Ak</h1>
+            <span class="subtitle">Computer Engineering Academic & Cryptography Researcher</span>
+        </header>
+
+        <section id="about">
+            <p>
+                My work explores the quiet intersection of mathematics and machine logic. I specialize in <strong>Applied Cryptography</strong> and <strong>Game Theoretic Security</strong>, seeking elegance in secure protocol design.
+            </p>
+            <p>
+                Currently, I am an academic in the Department of Computer Engineering, where I research privacy-preserving technologies and the application of blockchain for sustainable industrial systems.
+            </p>
+        </section>
+
+        <section id="research">
+            <h2>Research Areas</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 30px;">
+                <div>
+                    <strong style="font-family: var(--font-serif); color: var(--accent-indigo);">01. Cryptography</strong>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Post-quantum algorithms, Zero-Knowledge Proofs, and secure computation.</p>
+                </div>
+                <div>
+                    <strong style="font-family: var(--font-serif); color: var(--accent-indigo);">02. Game Theory</strong>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Nash Equilibrium analysis in network defense and incentive mechanisms.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="publications">
+            <h2>Selected Works</h2>
+            
+            <div class="pub-item">
+                <span class="pub-year">2026</span>
+                <span class="pub-title">Blockchain-based Reward Systems for Tourism Carbon Reduction</span>
+                <span class="pub-venue">International Conference on Blockchain Technology</span>
+                <div class="links" style="margin-top: 8px;">
+                    <a href="#">PDF</a> <a href="#">Cite</a>
+                </div>
+            </div>
+
+            <div class="pub-item">
+                <span class="pub-year">2025</span>
+                <span class="pub-title">Game Theoretic Analysis of Network Intrusion Detection</span>
+                <span class="pub-venue">IEEE Transactions on Information Forensics and Security</span>
+                <div class="links" style="margin-top: 8px;">
+                    <a href="#">Publisher</a> <a href="#">DOI</a>
+                </div>
+            </div>
+
+            <div class="pub-item">
+                <span class="pub-year">2025</span>
+                <span class="pub-title">Efficient Zero-Knowledge Proofs for Distributed Systems</span>
+                <span class="pub-venue">ACM SIGSAC (CCS)</span>
+                <div class="links" style="margin-top: 8px;">
+                    <a href="#">PDF</a> <a href="#">Code</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <div class="contact-box">
+                <p><strong>Murat Ak</strong><br>
+                Department of Computer Engineering</p>
+                <p>
+                    <i class="fas fa-envelope" style="color: var(--accent-red); margin-right: 10px;"></i> 
+                    murat.ak [at] university.edu
+                </p>
+                
+                <div class="social-links">
+                    <a href="https://github.com/muratak"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fas fa-graduation-cap"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            &copy; 2026 Murat Ak. <br>Designed with Wabi-Sabi principles.
+        </footer>
+
+    </main>
+</div>
+
+</body>
+</html>

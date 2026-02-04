@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 2: Fundamentals | Graph Theory</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #1a365d;   /* Oxford Blue */
+            --accent: #e67e22;    /* Burnt Orange */
+            --bg-body: #fdfbf7;   /* Warm Paper */
+            --bg-sidebar: #102a43;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --border-color: #e2e8f0;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3, h4, .sans-serif {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-top: 2.5rem;
+        }
+
+        h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px; }
+        h2 { font-size: 1.8rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; }
+        
+        code {
+            font-family: 'Fira Code', monospace;
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        /* --- Sidebar --- */
+        nav {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            color: white;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            font-family: 'Montserrat', sans-serif;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        nav .course-title { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #829ab1; margin-bottom: 0.5rem; }
+        nav h1 { color: white; margin-top: 0; font-size: 1.5rem; margin-bottom: 2rem; }
+        
+        nav ul { list-style: none; padding: 0; }
+        nav li { margin-bottom: 0.8rem; }
+        nav a { color: #bcccdc; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; display: block; padding: 5px 0; border-left: 3px solid transparent; padding-left: 10px; }
+        nav a:hover, nav a.active { color: white; border-left-color: var(--accent); background: rgba(255,255,255,0.05); }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 4rem 6rem;
+            max-width: 900px;
+        }
+
+        /* --- Academic Boxes (The Secret Sauce) --- */
+        
+        /* 1. Definition Box */
+        .definition {
+            background-color: white;
+            border-left: 6px solid var(--primary);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        .definition-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* 2. Theorem Box */
+        .theorem {
+            background-color: #fffaf0; /* Light Orange Tint */
+            border: 1px solid #fbd38d;
+            border-left: 6px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+        .theorem-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: #c05621;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* 3. Example/Note Box */
+        .example {
+            background-color: #f7fafc;
+            border-top: 3px solid #cbd5e0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+
+        /* --- Visualizations (SVG) --- */
+        .viz-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+        .viz-box {
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .caption { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; font-style: italic; font-family: 'Montserrat', sans-serif; }
+        
+        /* SVG Styles */
+        svg { overflow: visible; }
+        .node { fill: white; stroke: var(--primary); stroke-width: 2px; }
+        .node text { fill: var(--primary); font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; stroke: none; }
+        .edge { stroke: #cbd5e0; stroke-width: 2px; }
+        .edge.highlight { stroke: var(--accent); stroke-width: 3px; }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; position: relative; padding: 1rem; }
+            main { margin-left: 0; padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="course-title">CS 304: Spring 2026</div>
+        <h1>Graph Theory</h1>
+        <ul>
+            <li><a href="module1.html">← Module 1: Appetizer</a></li>
+            <li style="margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);"></li>
+            <li><a href="#definition" class="active">2.1 Graph Definition</a></li>
+            <li><a href="#degrees">2.2 Degrees & Handshaking</a></li>
+            <li><a href="#special">2.3 Special Graphs (K<sub>n</sub>)</a></li>
+            <li><a href="#bipartite">2.4 Bipartite Graphs</a></li>
+            <li><a href="#walks">2.5 Walks & Paths</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <div style="font-family: 'Montserrat'; color: var(--accent); font-weight: 600;">Module 02</div>
+            <h1>Fundamentals & Definitions</h1>
+            <p class="intro">
+                To build complex networks, we must first agree on the language. In this module, we rigorously define what a graph is, explore the fundamental "Handshaking Lemma," and categorize special types of graphs.
+            </p>
+        </header>
+
+        <section id="definition">
+            <h2>The Graph Definition</h2>
+            <p>
+                Intuitively, a graph is a bunch of dots connected by lines. Formally, we speak of sets.
+            </p>
+
+            <div class="definition">
+                <span class="definition-title">Definition 2.1: Simple Graph</span>
+                A graph \( G = (V, E) \) consists of:
+                <ul>
+                    <li>A non-empty set of <strong>vertices</strong> (or nodes) \( V \).</li>
+                    <li>A set of <strong>edges</strong> \( E \), where each edge is an unordered pair of distinct vertices \( \{u, v\} \).</li>
+                </ul>
+                The number of vertices \( n = |V| \) is the <strong>order</strong> of the graph.<br>
+                The number of edges \( m = |E| \) is the <strong>size</strong> of the graph.
+            </div>
+
+            <p>
+                If the edges have direction (arrows), we call it a <strong>Directed Graph (Digraph)</strong>. If we allow multiple edges between the same two nodes, or loops (edges from a node to itself), we call it a <strong>Multigraph</strong>. Unless stated otherwise, we assume our graphs are <em>simple</em> (no loops, no multi-edges).
+            </p>
+        </section>
+
+        <section id="degrees">
+            <h2>Degrees & The Handshaking Lemma</h2>
+            <p>
+                The degree of a vertex represents its connectivity. In a social network, this is your number of friends.
+            </p>
+
+            <div class="definition">
+                <span class="definition-title">Definition 2.2: Degree</span>
+                The <strong>degree</strong> of a vertex \( v \), denoted \( d(v) \) or \( \deg(v) \), is the number of edges incident to it.
+                <br><br>
+                <small><em>Note: In a multigraph, a self-loop contributes 2 to the degree.</em></small>
+            </div>
+
+            <div class="theorem">
+                <span class="theorem-title">Theorem 2.1: The Handshaking Lemma</span>
+                For any graph \( G = (V, E) \), the sum of the degrees of the vertices is exactly twice the number of edges:
+                \[ \sum_{v \in V} d(v) = 2|E| \]
+            </div>
+
+            <div class="example">
+                <strong>Why "Handshaking"?</strong> Imagine a party. If several people shake hands, each handshake involves two people. If you count how many times each person shook a hand and sum them up, you will have counted every handshake exactly twice.
+                <br><br>
+                <strong>Corollary:</strong> The number of vertices with an <em>odd</em> degree must be even.
+            </div>
+        </section>
+
+        <section id="special">
+            <h2>Special Graphs</h2>
+            <p>Some graph structures appear so frequently that they have their own names.</p>
+
+            <h3>Complete Graphs (\( K_n \))</h3>
+            <p>A simple graph where every pair of distinct vertices is connected by an edge.</p>
+
+            <div class="viz-container">
+                <div class="viz-box">
+                    <svg width="100" height="100" viewBox="-1.5 -1.5 3 3">
+                        <polygon points="0,-1 0.866,0.5 -0.866,0.5" stroke="#1a365d" fill="none" stroke-width="0.15"/>
+                        <circle cx="0" cy="-1" r="0.3" class="node"/>
+                        <circle cx="0.866" cy="0.5" r="0.3" class="node"/>
+                        <circle cx="-0.866" cy="0.5" r="0.3" class="node"/>
+                    </svg>
+                    <div class="caption">\( K_3 \) (Triangle)</div>
+                </div>
+
+                <div class="viz-box">
+                    <svg width="100" height="100" viewBox="-1.5 -1.5 3 3">
+                        <path d="M -1,-1 L 1,-1 L 1,1 L -1,1 Z M -1,-1 L 1,1 M 1,-1 L -1,1" stroke="#1a365d" fill="none" stroke-width="0.15"/>
+                        <circle cx="-1" cy="-1" r="0.3" class="node"/>
+                        <circle cx="1" cy="-1" r="0.3" class="node"/>
+                        <circle cx="1" cy="1" r="0.3" class="node"/>
+                        <circle cx="-1" cy="1" r="0.3" class="node"/>
+                    </svg>
+                    <div class="caption">\( K_4 \)</div>
+                </div>
+
+                <div class="viz-box">
+                    <svg width="100" height="100" viewBox="-1.2 -1.2 2.4 2.4">
+                        <path d="M 0,-1 L 0.95,-0.31 L 0.59,0.81 L -0.59,0.81 L -0.95,-0.31 Z" stroke="#1a365d" fill="none" stroke-width="0.05"/>
+                        <path d="M 0,-1 L 0.59,0.81 L -0.95,-0.31 L 0.95,-0.31 L -0.59,0.81 Z" stroke="#1a365d" fill="none" stroke-width="0.05"/>
+                        
+                        <circle cx="0" cy="-1" r="0.15" class="node"/>
+                        <circle cx="0.95" cy="-0.31" r="0.15" class="node"/>
+                        <circle cx="0.59" cy="0.81" r="0.15" class="node"/>
+                        <circle cx="-0.59" cy="0.81" r="0.15" class="node"/>
+                        <circle cx="-0.95" cy="-0.31" r="0.15" class="node"/>
+                    </svg>
+                    <div class="caption">\( K_5 \)</div>
+                </div>
+            </div>
+
+            <p>
+                In a complete graph \( K_n \):
+                <br>
+                The number of edges is \( |E| = \binom{n}{2} = \frac{n(n-1)}{2} \).
+            </p>
+        </section>
+
+        <section id="bipartite">
+            <h2>Bipartite Graphs</h2>
+            <p>
+                A graph is <strong>bipartite</strong> if its vertices can be divided into two disjoint sets, \( V_1 \) and \( V_2 \), such that every edge connects a vertex in \( V_1 \) to one in \( V_2 \).
+            </p>
+            
+            <div class="viz-container">
+                <svg width="300" height="150">
+                    <rect x="20" y="10" width="60" height="130" fill="rgba(230, 126, 34, 0.1)" rx="10"/>
+                    <text x="50" y="30" text-anchor="middle" fill="#e67e22" font-size="10" font-family="Montserrat">Set V1</text>
+                    
+                    <rect x="220" y="10" width="60" height="130" fill="rgba(26, 54, 93, 0.1)" rx="10"/>
+                    <text x="250" y="30" text-anchor="middle" fill="#1a365d" font-size="10" font-family="Montserrat">Set V2</text>
+
+                    <circle cx="50" cy="50" r="6" class="node" id="a1"/>
+                    <circle cx="50" cy="90" r="6" class="node" id="a2"/>
+                    <circle cx="50" cy="120" r="6" class="node" id="a3"/>
+
+                    <circle cx="250" cy="60" r="6" class="node" id="b1" style="stroke: #e67e22"/>
+                    <circle cx="250" cy="100" r="6" class="node" id="b2" style="stroke: #e67e22"/>
+
+                    <line x1="56" y1="50" x2="244" y2="60" class="edge" />
+                    <line x1="56" y1="50" x2="244" y2="100" class="edge" />
+                    <line x1="56" y1="90" x2="244" y2="60" class="edge" />
+                    <line x1="56" y1="120" x2="244" y2="100" class="edge" />
+                </svg>
+            </div>
+
+            <div class="theorem">
+                <span class="theorem-title">Theorem 2.2: Bipartite Characterization</span>
+                A graph is bipartite if and only if it contains <strong>no odd cycles</strong>.
+            </div>
+            
+            <p>
+                This leads to a simple algorithm to check for bipartiteness: Pick a node and color it Blue. Color its neighbors Red. Color their neighbors Blue. If you ever try to color a neighbor of a Blue node Blue (or Red node Red), the graph is not bipartite.
+            </p>
+        </section>
+
+    </main>
+</body>
+</html>

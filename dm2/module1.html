@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Appetizer | Graph Theory</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50; /* Deep Blue/Grey */
+            --secondary-color: #e67e22; /* Burnt Orange */
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --sidebar-width: 280px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Navigation Sidebar (Same as Index) --- */
+        nav {
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        nav h1 { font-size: 1.5rem; margin-bottom: 0.5rem; border-bottom: 2px solid var(--secondary-color); padding-bottom: 10px; }
+        nav p.subtitle { font-size: 0.9rem; opacity: 0.8; margin-bottom: 2rem; }
+        nav ul { list-style: none; padding: 0; }
+        nav li { margin-bottom: 1rem; }
+        nav a { color: #ecf0f1; text-decoration: none; font-weight: 500; transition: color 0.3s; display: block; padding: 5px 0; }
+        nav a:hover, nav a.active { color: var(--secondary-color); padding-left: 5px; }
+        nav .back-link { margin-bottom: 2rem; font-size: 0.9rem; opacity: 0.7; }
+        nav .back-link:hover { opacity: 1; }
+
+        /* --- Main Content --- */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 4rem 5rem;
+            max-width: 1000px;
+        }
+
+        /* Typography & Layout */
+        h2 { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 1rem; }
+        h3 { font-size: 1.8rem; color: var(--primary-color); margin-top: 3rem; margin-bottom: 1rem; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        p { font-size: 1.1rem; line-height: 1.7; color: #444; margin-bottom: 1.5rem; }
+        
+        .highlight-box {
+            background-color: #fff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        /* --- Diagram Containers --- */
+        .diagram-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* --- SVG Styling --- */
+        svg { width: 100%; max-width: 500px; height: auto; }
+        .node { fill: var(--bg-color); stroke: var(--primary-color); stroke-width: 2px; }
+        .edge { stroke: #95a5a6; stroke-width: 2px; }
+        .node-text { font-family: sans-serif; font-size: 14px; fill: var(--primary-color); font-weight: bold; text-anchor: middle; dominant-baseline: middle; }
+        
+        /* Bridges specific */
+        .island { fill: #dcdde1; stroke: #bdc3c7; stroke-width: 2; }
+        .bridge { stroke: var(--secondary-color); stroke-width: 6; fill: none; }
+
+        /* --- Footer Navigation --- */
+        .module-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+        }
+        .btn {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        .btn:hover { background-color: var(--secondary-color); }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); }
+        .btn-outline:hover { background-color: var(--primary-color); color: white; }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            nav { width: 100%; position: relative; height: auto; padding: 1rem; }
+            main { margin-left: 0; padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="back-link">← Back to Course Home</a>
+        <h1>Graph Theory</h1>
+        <p class="subtitle">Module 01: Appetizer</p>
+        
+        <ul>
+            <li><a href="#history" class="active">1.1 The Beginning</a></li>
+            <li><a href="#hamilton">1.2 Hamilton's Game</a></li>
+            <li><a href="#modern">1.3 Modern Applications</a></li>
+            <li><a href="#internet">1.4 Ranking the Web</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <h2>01. Appetizer: History & Applications</h2>
+            <p>Before we dive into definitions and theorems, let's explore where Graph Theory came from and why it dominates the modern world of computing.</p>
+        </header>
+
+        <section id="history">
+            <h3>The Seven Bridges of Königsberg</h3>
+            <p>
+                Graph theory was born in <strong>1736</strong> when the mathematician <strong>Leonhard Euler</strong> solved a famous problem concerning the city of Königsberg (now Kaliningrad). The city was set on both sides of the Pregel River and included two large islands which were connected to each other and the mainland by seven bridges.
+            </p>
+            
+            <div class="highlight-box">
+                <strong>The Problem:</strong> Is it possible to devise a walk through the city that crosses each of those seven bridges exactly once?
+            </div>
+
+            <div class="diagram-container">
+                <div style="width: 100%; text-align: center;">
+                    <svg viewBox="0 0 400 250">
+                        <rect width="400" height="250" fill="#eef2f3"/>
+                        
+                        <path class="island" d="M 0,0 L 150,0 L 150,80 Q 200,100 250,80 L 400,0 L 400,0 L 0,0" fill="#fff" /> <path class="island" d="M 0,250 L 150,250 L 150,170 Q 200,150 250,170 L 400,250 L 0,250" fill="#fff" /> <ellipse cx="200" cy="125" rx="60" ry="30" class="island" fill="#fff" /> <path class="island" d="M 280,50 L 400,50 L 400,200 L 280,200 Q 260,125 280,50" fill="#fff" /> <path class="bridge" d="M 160,80 L 160,105" /> <path class="bridge" d="M 240,80 L 240,105" /> <path class="bridge" d="M 160,170 L 160,145" /> <path class="bridge" d="M 240,170 L 240,145" /> <path class="bridge" d="M 260,125 L 300,125" /> <path class="bridge" d="M 280,80 Q 320,50 340,70" /> <path class="bridge" d="M 280,170 Q 320,200 340,180" /> <text x="70" y="40" class="node-text">North Bank</text>
+                        <text x="70" y="220" class="node-text">South Bank</text>
+                        <text x="200" y="129" class="node-text">Island</text>
+                        <text x="350" y="130" class="node-text">East</text>
+                    </svg>
+                    <div class="caption">Figure 1: Abstract representation of the 7 bridges.</div>
+                </div>
+            </div>
+
+            <p>
+                Euler realized that the physical layout didn't matter—only the connections. He simplified the map into a set of <strong>nodes</strong> (land masses) and <strong>edges</strong> (bridges). This abstraction was the first "graph." He proved that such a walk is impossible because the graph contains more than two nodes with an odd number of connections (odd degree).
+            </p>
+        </section>
+
+        <section id="hamilton">
+            <h3>Hamilton and the Icosian Game</h3>
+            <p>
+                While Euler focused on edges, <strong>Sir William Rowan Hamilton</strong> (1805–1865) focused on vertices. Famous for discovering Quaternions (<span style="font-family: monospace;">i² = j² = k² = -1</span>), he also invented the "Icosian Game" in 1859.
+            </p>
+            <p>
+                The goal was to find a path along the edges of a dodecahedron that visits every vertex <strong>exactly once</strong> and returns to the start. This is now known as the <strong>Hamiltonian Cycle</strong> problem. unlike Euler's problem (which is easy to solve efficiently), finding a Hamiltonian cycle is computationally difficult (NP-Complete) for general graphs.
+            </p>
+        </section>
+
+        <section id="modern">
+            <h3>Modern Applications: Community Detection</h3>
+            <p>
+                Today, graph theory is fundamental to data science. One major application is <strong>Community Detection</strong>. In social networks, biological systems, or citation networks, we often want to find groups of nodes that are densely connected internally but sparsely connected to the rest of the network.
+            </p>
+
+            <div class="diagram-container">
+                <svg viewBox="0 0 500 200">
+                    <g id="cluster1">
+                        <circle cx="100" cy="100" r="15" fill="#e67e22" opacity="0.2" />
+                        <circle cx="100" cy="60" r="8" class="node" style="fill: #e67e22"/>
+                        <circle cx="70" cy="120" r="8" class="node" style="fill: #e67e22"/>
+                        <circle cx="130" cy="120" r="8" class="node" style="fill: #e67e22"/>
+                        <line x1="100" y1="60" x2="70" y2="120" class="edge" />
+                        <line x1="100" y1="60" x2="130" y2="120" class="edge" />
+                        <line x1="70" y1="120" x2="130" y2="120" class="edge" />
+                    </g>
+                    
+                    <g id="cluster2">
+                        <circle cx="400" cy="100" r="15" fill="#3498db" opacity="0.2" />
+                        <circle cx="400" cy="60" r="8" class="node" style="fill: #3498db"/>
+                        <circle cx="370" cy="120" r="8" class="node" style="fill: #3498db"/>
+                        <circle cx="430" cy="120" r="8" class="node" style="fill: #3498db"/>
+                        <line x1="400" y1="60" x2="370" y2="120" class="edge" />
+                        <line x1="400" y1="60" x2="430" y2="120" class="edge" />
+                        <line x1="370" y1="120" x2="430" y2="120" class="edge" />
+                    </g>
+
+                    <line x1="130" y1="120" x2="370" y2="120" class="edge" stroke-dasharray="5,5" />
+                    
+                    <text x="250" y="90" text-anchor="middle" fill="#777" font-size="12">Weak Connection</text>
+                    <text x="100" y="160" text-anchor="middle" fill="#e67e22" font-weight="bold">Community A</text>
+                    <text x="400" y="160" text-anchor="middle" fill="#3498db" font-weight="bold">Community B</text>
+                </svg>
+            </div>
+        </section>
+
+        <section id="internet">
+            <h3>Ranking the Web</h3>
+            <p>
+                Perhaps the most lucrative application of graph theory is <strong>PageRank</strong> (used by Google). The web is treated as a massive directed graph:
+            </p>
+            <ul>
+                <li><strong>Nodes:</strong> Web pages.</li>
+                <li><strong>Directed Edges:</strong> Hyperlinks.</li>
+            </ul>
+            <p>
+                A link from Page A to Page B is interpreted as a "vote" for Page B. However, not all votes are equal; a vote from a high-quality page counts more. This recursive definition is solved using linear algebra on the graph's adjacency matrix.
+            </p>
+            <p>
+                Similarly, your GPS system uses graph algorithms (like Dijkstra's Algorithm) to find the shortest path between two nodes in a road network, where edge weights represent distance or traffic time.
+            </p>
+        </section>
+
+        <div class="module-nav">
+            <a href="index.html" class="btn btn-outline">← Home</a>
+            <a href="#" class="btn">Next: Fundamentals →</a>
+        </div>
+
+    </main>
+</body>
+</html>

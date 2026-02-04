@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 3: Connectivity | Graph Theory</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="https://tikzjax.com/v1/fonts.css">
+    <script src="https://tikzjax.com/v1/tikzjax.js"></script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --primary: #1a365d;   /* Oxford Blue */
+            --accent: #e67e22;    /* Burnt Orange */
+            --bg-body: #fdfbf7;   /* Warm Paper */
+            --bg-sidebar: #102a43;
+            --text-main: #2d3748;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--primary); margin-top: 2.5rem; }
+        h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px; }
+        h2 { font-size: 1.8rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; display: inline-block; }
+        h3 { font-size: 1.4rem; font-weight: 600; margin-bottom: 1rem; }
+        
+        /* --- Sidebar --- */
+        nav {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            color: white;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            font-family: 'Montserrat', sans-serif;
+        }
+        nav .course-title { font-size: 0.85rem; text-transform: uppercase; color: #829ab1; margin-bottom: 0.5rem; }
+        nav h1 { color: white; margin-top: 0; font-size: 1.5rem; margin-bottom: 2rem; }
+        nav ul { list-style: none; padding: 0; }
+        nav li { margin-bottom: 0.8rem; }
+        nav a { color: #bcccdc; text-decoration: none; font-size: 0.95rem; display: block; padding: 5px 0; border-left: 3px solid transparent; padding-left: 10px; transition: all 0.2s; }
+        nav a:hover, nav a.active { color: white; border-left-color: var(--accent); background: rgba(255,255,255,0.05); }
+
+        /* --- Main Content --- */
+        main { flex: 1; margin-left: var(--sidebar-width); padding: 4rem 6rem; max-width: 900px; }
+
+        /* --- Academic Boxes --- */
+        .definition {
+            background-color: white;
+            border-left: 6px solid var(--primary);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            border-radius: 0 8px 8px 0;
+        }
+        .definition-title {
+            font-family: 'Montserrat', sans-serif; font-weight: 700; text-transform: uppercase;
+            font-size: 0.85rem; color: var(--primary); letter-spacing: 1px; margin-bottom: 0.5rem; display: block;
+        }
+
+        .theorem {
+            background-color: #fffaf0;
+            border: 1px solid #fbd38d;
+            border-left: 6px solid var(--accent);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+        .theorem-title {
+            font-family: 'Montserrat', sans-serif; font-weight: 700; color: #c05621; margin-bottom: 0.5rem; display: block;
+        }
+
+        /* --- Graph Containers --- */
+        .tikz-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            min-height: 150px; /* Prevents layout shift while loading */
+        }
+        .caption { text-align: center; font-size: 0.85rem; color: #718096; font-style: italic; margin-top: 5px; font-family: 'Montserrat', sans-serif;}
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            nav { width: 100%; height: auto; position: relative; padding: 1rem; }
+            main { margin-left: 0; padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="course-title">CS 304: Spring 2026</div>
+        <h1>Graph Theory</h1>
+        <ul>
+            <li><a href="module2.html">← Module 2: Fundamentals</a></li>
+            <li style="margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);"></li>
+            <li><a href="#walks" class="active">3.1 Walks vs Paths</a></li>
+            <li><a href="#connectivity">3.2 Connectivity</a></li>
+            <li><a href="#components">3.3 Components</a></li>
+            <li><a href="#cutting">3.4 Cutting Edges</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <header>
+            <div style="font-family: 'Montserrat'; color: var(--accent); font-weight: 600;">Module 03</div>
+            <h1>Connectivity & Paths</h1>
+            <p class="intro">
+                Now that we have defined graphs, we must understand how to move through them. This module covers the fundamental concepts of navigation: walks, trails, paths, and how we determine if a network is "connected."
+            </p>
+        </header>
+
+        <section id="walks">
+            <h2>Walks, Trails, and Paths</h2>
+            <p>
+                In standard language, we use "path" and "walk" interchangeably. In Graph Theory, the distinction is crucial.
+            </p>
+
+            <div class="definition">
+                <span class="definition-title">Definition 3.1: The Hierarchy</span>
+                <ol>
+                    <li><strong>Walk:</strong> A sequence of vertices and edges (vertices and edges can be repeated).</li>
+                    <li><strong>Trail:</strong> A walk with <strong>no repeated edges</strong>.</li>
+                    <li><strong>Path:</strong> A walk with <strong>no repeated vertices</strong> (which implies no repeated edges).</li>
+                </ol>
+            </div>
+
+            <div class="tikz-container">
+                <script type="text/tikz">
+                    \begin{tikzpicture}[
+                        scale=1.5,
+                        node distance=2cm,
+                        main/.style={circle, draw=black, fill=white, thick},
+                        highlight/.style={circle, draw=#1, fill=#1!10, thick}
+                    ]
+                        % Nodes
+                        \node[main] (1) at (0,0) {1};
+                        \node[main] (2) at (1.5, 1) {2};
+                        \node[main] (3) at (3,0) {3};
+                        \node[main] (4) at (1.5, -1) {4};
+                        
+                        % Edges
+                        \draw (1) -- (2);
+                        \draw (2) -- (3);
+                        \draw (3) -- (4);
+                        \draw (4) -- (1);
+                        \draw (1) -- (3); % Diagonal
+
+                        % Illustration of a Walk that isn't a path
+                        \draw[->, orange, ultra thick, bend left=15] (1) to (2);
+                        \draw[->, orange, ultra thick, bend left=15] (2) to (3);
+                        \draw[->, orange, ultra thick, bend left=15] (3) to (1);
+                        \draw[->, orange, ultra thick, bend left=15] (1) to (4);
+                        
+                        \node[orange] at (1.5, -1.5) {Walk: $1 \to 2 \to 3 \to 1 \to 4$};
+                    \end{tikzpicture}
+                </script>
+            </div>
+            <div class="caption">Figure 3.1: A walk that visits node 1 twice (not a path).</div>
+        </section>
+
+        <section id="connectivity">
+            <h2>Connectivity</h2>
+            <p>
+                A graph is <strong>connected</strong> if there is a path between every pair of vertices. If the graph is broken into disjoint pieces, those pieces are called <strong>Connected Components</strong>.
+            </p>
+
+            <div class="tikz-container">
+                <script type="text/tikz">
+                    \begin{tikzpicture}[scale=1, transform shape]
+                        % Component 1
+                        \node[circle, fill=blue!20, draw=blue, thick] (A) at (0,0) {A};
+                        \node[circle, fill=blue!20, draw=blue, thick] (B) at (1,1) {B};
+                        \node[circle, fill=blue!20, draw=blue, thick] (C) at (1,-1) {C};
+                        \draw[thick, blue] (A) -- (B) -- (C) -- (A);
+
+                        % Component 2
+                        \node[circle, fill=red!20, draw=red, thick] (D) at (3,0) {D};
+                        \node[circle, fill=red!20, draw=red, thick] (E) at (4,1) {E};
+                        \draw[thick, red] (D) -- (E);
+
+                        % Component 3
+                        \node[circle, fill=green!20, draw=green!50!black, thick] (F) at (5,-0.5) {F};
+
+                        % Label
+                        \node at (2.5, -1.5) {A graph with 3 Connected Components};
+                    \end{tikzpicture}
+                </script>
+            </div>
+        </section>
+
+        <section id="cutting">
+            <h2>Bridges (Cut Edges)</h2>
+            <p>
+                Some edges are more critical than others. A <strong>Bridge</strong> (or cut-edge) is an edge whose removal increases the number of connected components.
+            </p>
+
+            <div class="theorem">
+                <span class="theorem-title">Theorem 3.1</span>
+                An edge \( e \) is a bridge if and only if it does not lie on any cycle.
+            </div>
+
+            <div class="tikz-container">
+                <script type="text/tikz">
+                    \begin{tikzpicture}[auto, node distance=1.5cm, thick]
+                        % Left Cycle
+                        \node[circle, draw] (u1) {};
+                        \node[circle, draw] (u2) [right of=u1] {};
+                        \node[circle, draw] (u3) [below of=u2] {};
+                        \node[circle, draw] (u4) [left of=u3] {};
+                        
+                        \draw (u1) -- (u2) -- (u3) -- (u4) -- (u1);
+
+                        % Bridge
+                        \node[circle, draw] (v1) [right=2cm of u2] {};
+                        \draw[red, ultra thick] (u2) -- node[above, black] {Bridge} (v1);
+
+                        % Right Triangle
+                        \node[circle, draw] (v2) [right of=v1] {};
+                        \node[circle, draw] (v3) [below of=v1] {};
+                        \draw (v1) -- (v2) -- (v3) -- (v1);
+                    \end{tikzpicture}
+                </script>
+            </div>
+            <div class="caption">
+                Figure 3.3: The red edge is a bridge. Removing it disconnects the graph.
+            </div>
+        </section>
+
+    </main>
+</body>
+</html>

@@ -1,157 +1,315 @@
-<script type="text/javascript">
-    // --- 1. Setup Vis.js ---
-    // Start with some default data
-    var nodes = new vis.DataSet([
-        {id: 1, label: 'A'},
-        {id: 2, label: 'B'},
-        {id: 3, label: 'C'},
-        {id: 4, label: 'D'},
-        {id: 5, label: 'E'}
-    ]);
-
-    var edges = new vis.DataSet([
-        {from: 1, to: 2},
-        {from: 1, to: 3},
-        {from: 2, to: 4},
-        {from: 2, to: 5}
-    ]);
-
-    var container = document.getElementById('mynetwork');
-    var data = { nodes: nodes, edges: edges };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Playground | Graph Theory</title>
     
-    var options = {
-        nodes: {
-            shape: 'dot',
-            size: 20,
-            font: { size: 16, face: 'Montserrat', color: '#1a365d' },
-            borderWidth: 2,
-            color: { 
-                border: '#1a365d', 
-                background: '#ffffff', 
-                highlight: { border: '#e67e22', background: '#fffaf0' } 
-            }
-        },
-        edges: {
-            width: 2,
-            color: { color: '#cbd5e0', highlight: '#e67e22' },
-            smooth: { type: 'continuous' }
-        },
-        physics: {
-            stabilization: false,
-            barnesHut: { gravitationalConstant: -2000, springConstant: 0.04 }
-        },
-        interaction: { 
-            navigationButtons: true, 
-            keyboard: true 
-        },
-        // --- THE FIX IS HERE ---
-        manipulation: {
-            enabled: true,
-            initiallyActive: true,
-            addNode: function(nodeData, callback) {
-                // When user clicks the canvas, this function runs.
-                // We ask for a label.
-                var label = prompt("Enter Node Name:", "Node " + (nodes.length + 1));
-                
-                if (label !== null) {
-                    nodeData.label = label;
-                    callback(nodeData); // This actually adds the node
-                } else {
-                    callback(null); // User cancelled
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjleoDx887Z5e+qwLaMc6WAdednWYF6WAfXOSmnvZJ+uGLf4k0I5/U59T8o4os5FvXL+O+lPrbRiCVg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #1a365d;   /* Oxford Blue */
+            --accent: #e67e22;    /* Burnt Orange */
+            --bg-body: #fdfbf7;   /* Warm Paper */
+            --bg-sidebar: #102a43;
+            --text-main: #2d3748;
+            --sidebar-width: 260px;
+        }
+
+        body {
+            font-family: 'Libre Baskerville', serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--primary); }
+        h1 { font-size: 1.8rem; margin: 0; }
+        
+        /* --- Sidebar --- */
+        nav {
+            width: var(--sidebar-width);
+            background-color: var(--bg-sidebar);
+            color: white;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        nav .course-title { font-size: 0.85rem; text-transform: uppercase; color: #829ab1; margin-bottom: 0.5rem; }
+        nav ul { list-style: none; padding: 0; }
+        nav li { margin-bottom: 0.8rem; }
+        nav a { color: #bcccdc; text-decoration: none; font-size: 0.95rem; display: block; padding: 5px 0; border-left: 3px solid transparent; padding-left: 10px; transition: all 0.2s; }
+        nav a:hover, nav a.active { color: white; border-left-color: var(--accent); background: rgba(255,255,255,0.05); }
+
+        /* --- Main Layout --- */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .toolbar {
+            padding: 1rem 2rem;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            z-index: 5;
+        }
+
+        .canvas-container {
+            flex: 1;
+            background-color: #f0f4f8;
+            position: relative;
+            /* Ensure the container actually takes up space */
+            height: calc(100vh - 80px); 
+        }
+
+        /* The Graph Canvas */
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            outline: none;
+        }
+
+        /* --- Vis.js Customization overrides --- */
+        div.vis-network div.vis-manipulation {
+            background: rgba(255, 255, 255, 0.95) !important;
+            border-radius: 0 0 8px 0;
+            border-top: none !important;
+            border-left: none !important;
+            padding: 10px !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        /* Style the buttons inside the manipulation toolbar */
+        div.vis-network div.vis-edit-mode-btn {
+            background: #e67e22 !important; /* Accent */
+            color: white !important;
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Controls Panel */
+        .controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 250px;
+            z-index: 100;
+        }
+        .controls h3 { font-size: 1rem; margin-top: 0; border-bottom: 2px solid var(--accent); padding-bottom: 5px; }
+        .controls p { font-size: 0.85rem; line-height: 1.4; color: #718096; }
+        
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        .btn-action:hover { background: #2c5282; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="course-title">CS 304: Interactive Lab</div>
+        <h1>Graph Theory</h1>
+        <ul>
+            <li><a href="module3.html">← Back to Course</a></li>
+            <li style="margin: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1);"></li>
+            <li><a href="#" class="active">SandBox Mode</a></li>
+            <li><a href="#" onclick="loadPreset('k5')">Load K5 (Complete)</a></li>
+            <li><a href="#" onclick="loadPreset('bipartite')">Load K3,3 (Bipartite)</a></li>
+            <li><a href="#" onclick="loadPreset('petersen')">Load Petersen Graph</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="toolbar">
+            <div>
+                <h1>Graph Playground</h1>
+                <span style="font-size: 0.9rem; color: #718096;">Click "Add Node" then click empty space. Click "Add Edge" and drag between nodes.</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <div id="mynetwork"></div>
+            
+            <div class="controls">
+                <h3>Lab Controls</h3>
+                <p>1. Click <strong>Add Node</strong> (top-left blue/orange bar).<br>2. Click empty space.<br>3. Enter name.</p>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                <button class="btn-action" onclick="runBFS()">Run BFS Animation</button>
+                <button class="btn-action" onclick="resetColor()">Reset Colors</button>
+                <button class="btn-action" style="background-color: #e53e3e;" onclick="clearGraph()">Clear Canvas</button>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript">
+        // --- 1. Setup Vis.js ---
+        var nodes = new vis.DataSet([
+            {id: 1, label: 'A'},
+            {id: 2, label: 'B'},
+            {id: 3, label: 'C'},
+            {id: 4, label: 'D'},
+            {id: 5, label: 'E'}
+        ]);
+
+        var edges = new vis.DataSet([
+            {from: 1, to: 2},
+            {from: 1, to: 3},
+            {from: 2, to: 4},
+            {from: 2, to: 5}
+        ]);
+
+        var container = document.getElementById('mynetwork');
+        var data = { nodes: nodes, edges: edges };
+        
+        var options = {
+            nodes: {
+                shape: 'dot',
+                size: 20,
+                font: { size: 16, face: 'Montserrat', color: '#1a365d' },
+                borderWidth: 2,
+                color: { 
+                    border: '#1a365d', 
+                    background: '#ffffff', 
+                    highlight: { border: '#e67e22', background: '#fffaf0' } 
                 }
             },
-            addEdge: function(edgeData, callback) {
-                // When user drags a line between nodes
-                if (edgeData.from === edgeData.to) {
-                    var r = confirm("Do you want to connect the node to itself?");
-                    if (r === true) {
+            edges: {
+                width: 2,
+                color: { color: '#cbd5e0', highlight: '#e67e22' },
+                smooth: { type: 'continuous' }
+            },
+            physics: {
+                stabilization: false,
+                barnesHut: { gravitationalConstant: -2000, springConstant: 0.04 }
+            },
+            interaction: { 
+                navigationButtons: true, 
+                keyboard: true 
+            },
+            manipulation: {
+                enabled: true,
+                initiallyActive: true,
+                addNode: function(nodeData, callback) {
+                    var label = prompt("Enter Node Name:", "Node " + (nodes.length + 1));
+                    if (label !== null) {
+                        nodeData.label = label;
+                        callback(nodeData);
+                    } else {
+                        callback(null);
+                    }
+                },
+                addEdge: function(edgeData, callback) {
+                    if (edgeData.from === edgeData.to) {
+                        var r = confirm("Do you want to connect the node to itself?");
+                        if (r === true) {
+                            callback(edgeData);
+                        }
+                    } else {
                         callback(edgeData);
                     }
-                } else {
-                    callback(edgeData);
-                }
-            },
-            editEdge: false,
-            deleteNode: true,
-            deleteEdge: true
-        }
-    };
-
-    var network = new vis.Network(container, data, options);
-
-    // --- 2. Helper Functions (Presets) ---
-    
-    function clearGraph() {
-        nodes.clear();
-        edges.clear();
-    }
-
-    function loadPreset(type) {
-        clearGraph();
-        if(type === 'k5') {
-            // Create K5
-            let newNodes = [];
-            let newEdges = [];
-            for(let i=1; i<=5; i++) newNodes.push({id: i, label: String(i)});
-            for(let i=1; i<=5; i++) {
-                for(let j=i+1; j<=5; j++) {
-                    newEdges.push({from: i, to: j});
-                }
+                },
+                deleteNode: true,
+                deleteEdge: true
             }
-            nodes.add(newNodes);
-            edges.add(newEdges);
-        }
-        else if(type === 'bipartite') {
-            // K3,3
-            nodes.add([
-                {id: 1, label: 'U1', color: {background:'#fed7d7'}}, {id: 2, label: 'U2', color: {background:'#fed7d7'}}, {id: 3, label: 'U3', color: {background:'#fed7d7'}},
-                {id: 4, label: 'V1', color: {background:'#bee3f8'}}, {id: 5, label: 'V2', color: {background:'#bee3f8'}}, {id: 6, label: 'V3', color: {background:'#bee3f8'}}
-            ]);
-            edges.add([
-                {from:1,to:4}, {from:1,to:5}, {from:1,to:6},
-                {from:2,to:4}, {from:2,to:5}, {from:2,to:6},
-                {from:3,to:4}, {from:3,to:5}, {from:3,to:6}
-            ]);
-        }
-        else if (type === 'petersen') {
-            // Simple outer ring + inner star approximation
-            for(let i=0; i<5; i++) nodes.add({id: i, label: String(i)}); // Outer
-            for(let i=5; i<10; i++) nodes.add({id: i, label: String(i)}); // Inner
-            
-            // Outer cycle
-            edges.add([{from:0,to:1}, {from:1,to:2}, {from:2,to:3}, {from:3,to:4}, {from:4,to:0}]);
-            // Inner star
-            edges.add([{from:5,to:7}, {from:7,to:9}, {from:9,to:6}, {from:6,to:8}, {from:8,to:5}]);
-            // Spokes
-            for(let i=0; i<5; i++) edges.add({from: i, to: i+5});
-        }
-    }
+        };
 
-    function resetColor() {
-        var allNodes = nodes.get();
-        allNodes.forEach(n => {
-            nodes.update({id: n.id, color: {background: '#ffffff', border: '#1a365d'}});
-        });
-    }
+        var network = new vis.Network(container, data, options);
 
-    // --- 3. Example Algorithm: Random BFS ---
-    function runBFS() {
-        // A simple visual simulation of "visiting" nodes
-        let allIds = nodes.getIds();
-        if(allIds.length === 0) return;
-        
-        resetColor();
-        
-        let i = 0;
-        let interval = setInterval(() => {
-            if (i >= allIds.length) {
-                clearInterval(interval);
-                return;
+        // --- 2. Helper Functions (Presets) ---
+        function clearGraph() {
+            nodes.clear();
+            edges.clear();
+        }
+
+        function loadPreset(type) {
+            clearGraph();
+            if(type === 'k5') {
+                let newNodes = [];
+                let newEdges = [];
+                for(let i=1; i<=5; i++) newNodes.push({id: i, label: String(i)});
+                for(let i=1; i<=5; i++) {
+                    for(let j=i+1; j<=5; j++) {
+                        newEdges.push({from: i, to: j});
+                    }
+                }
+                nodes.add(newNodes);
+                edges.add(newEdges);
             }
-            // Randomly pick a node to "visit" just for demo
-            let id = allIds[i];
-            nodes.update({id: id, color: {background: '#e67e22', border: '#e67e22'}});
-            i++;
-        }, 500);
-    }
-</script>
+            else if(type === 'bipartite') {
+                nodes.add([
+                    {id: 1, label: 'U1', color: {background:'#fed7d7'}}, {id: 2, label: 'U2', color: {background:'#fed7d7'}}, {id: 3, label: 'U3', color: {background:'#fed7d7'}},
+                    {id: 4, label: 'V1', color: {background:'#bee3f8'}}, {id: 5, label: 'V2', color: {background:'#bee3f8'}}, {id: 6, label: 'V3', color: {background:'#bee3f8'}}
+                ]);
+                edges.add([
+                    {from:1,to:4}, {from:1,to:5}, {from:1,to:6},
+                    {from:2,to:4}, {from:2,to:5}, {from:2,to:6},
+                    {from:3,to:4}, {from:3,to:5}, {from:3,to:6}
+                ]);
+            }
+            else if (type === 'petersen') {
+                for(let i=0; i<5; i++) nodes.add({id: i, label: String(i)}); 
+                for(let i=5; i<10; i++) nodes.add({id: i, label: String(i)}); 
+                edges.add([{from:0,to:1}, {from:1,to:2}, {from:2,to:3}, {from:3,to:4}, {from:4,to:0}]);
+                edges.add([{from:5,to:7}, {from:7,to:9}, {from:9,to:6}, {from:6,to:8}, {from:8,to:5}]);
+                for(let i=0; i<5; i++) edges.add({from: i, to: i+5});
+            }
+        }
+
+        function resetColor() {
+            var allNodes = nodes.get();
+            allNodes.forEach(n => {
+                nodes.update({id: n.id, color: {background: '#ffffff', border: '#1a365d'}});
+            });
+        }
+
+        function runBFS() {
+            let allIds = nodes.getIds();
+            if(allIds.length === 0) return;
+            resetColor();
+            let i = 0;
+            let interval = setInterval(() => {
+                if (i >= allIds.length) {
+                    clearInterval(interval);
+                    return;
+                }
+                let id = allIds[i];
+                nodes.update({id: id, color: {background: '#e67e22', border: '#e67e22'}});
+                i++;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

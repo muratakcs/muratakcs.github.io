@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightSec 2026 - Antalya</title>
+    <style>
+        :root {
+            /* Akdeniz University / Antalya Inspired Colors */
+            --primary-blue: #002855; /* Deep Academic Blue */
+            --accent-orange: #f37021; /* Akdeniz Orange */
+            --light-bg: #f4f7f6;
+            --text-dark: #333;
+            --white: #ffffff;
+            --grey: #666;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #004080 100%);
+            color: var(--white);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-orange);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        header p.subtitle {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        header .venue-date {
+            margin-top: 1rem;
+            display: inline-block;
+            background-color: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Navigation / Tabs */
+        nav {
+            background-color: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button:hover {
+            color: var(--primary-blue);
+            background-color: #f9f9f9;
+        }
+
+        .tab-button.active {
+            color: var(--primary-blue);
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        /* Main Content Area */
+        main {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            min-height: 500px;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--accent-orange);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--text-dark);
+            margin-top: 1.5rem;
+        }
+
+        /* Components */
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-orange);
+            color: var(--white);
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #d65a0e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .sponsor-grid {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .sponsor-placeholder {
+            width: 150px;
+            height: 80px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: bold;
+            border-radius: 4px;
+        }
+
+        .card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .social-event-highlight {
+            background-color: #fff8e1;
+            border-left: 5px solid var(--accent-orange);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--accent-orange);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.8rem; }
+            .nav-container { flex-direction: column; }
+            .tab-button { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>LightSec 2026</h1>
+    <p class="subtitle">7th International Workshop on Lightweight Cryptography for Security & Privacy</p>
+    <div class="venue-date">
+        October 8 – 10, 2026 &nbsp;|&nbsp; Akdeniz University, Antalya, Türkiye
+    </div>
+</header>
+
+<nav>
+    <div class="nav-container">
+        <button class="tab-button active" onclick="openTab(event, 'home')">Home</button>
+        <button class="tab-button" onclick="openTab(event, 'program')">Program & Submission</button>
+        <button class="tab-button" onclick="openTab(event, 'organization')">Organization</button>
+        <button class="tab-button" onclick="openTab(event, 'venue')">Venue & Social</button>
+        <button class="tab-button" onclick="openTab(event, 'contact')">Contact</button>
+    </div>
+</nav>
+
+<main>
+    <div id="home" class="tab-content active">
+        <h2>Welcome to LightSec 2026</h2>
+        <p>LightSec 2026 continues the series' tradition of promoting novel research on security, privacy, and trust issues related to lightweight security. As new applications in AI, blockchain, IoT, and 5G/6G become ubiquitous, ensuring security with constrained resources is more critical than ever.</p>
+        
+        <p>This year, we are excited to host the workshop in the beautiful coastal city of Antalya, at <strong>Akdeniz University</strong>.</p>
+
+        <div style="background: #eef4ff; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3>📅 Important Dates (Tentative)</h3>
+            <table>
+                <tr>
+                    <td><strong>Paper Submission Deadline</strong></td>
+                    <td>June 12, 2026</td>
+                </tr>
+                <tr>
+                    <td><strong>Author Notification</strong></td>
+                    <td>August 14, 2026</td>
+                </tr>
+                <tr>
+                    <td><strong>Camera-Ready Version</strong></td>
+                    <td>September 11, 2026</td>
+                </tr>
+                <tr>
+                    <td><strong>Workshop Dates</strong></td>
+                    <td>October 8 – 9, 2026</td>
+                </tr>
+                 <tr>
+                    <td><strong>Social Event</strong></td>
+                    <td>October 10, 2026</td>
+                </tr>
+            </table>
+        </div>
+
+        <h3>Sponsors</h3>
+        <p>We are grateful for the support of our sponsors:</p>
+        <div class="sponsor-grid">
+            <div class="sponsor-placeholder">GOOGLE</div>
+            <div class="sponsor-placeholder">APPLE</div>
+            <div class="sponsor-placeholder">HUAWEI</div>
+        </div>
+    </div>
+
+    <div id="program" class="tab-content">
+        <h2>Call For Papers</h2>
+        <p>LightSec 2026 enthusiastically welcomes papers on algorithms, protocols, techniques, and their secure and efficient implementations for applications utilizing advanced cryptographic algorithms.</p>
+
+        <h3>Topics of Interest</h3>
+        <ul>
+            <li>Lightweight Cryptography for IoT and Cyber-Physical Systems</li>
+            <li>Post-Quantum Cryptography on Constrained Devices</li>
+            <li>Efficient Zero-Knowledge Proofs & Homomorphic Encryption</li>
+            <li>Hardware Security (FPGA/ASIC implementations)</li>
+            <li>Side-Channel Analysis and Countermeasures</li>
+            <li>Privacy-Preserving AI/ML on Edge Devices</li>
+        </ul>
+
+        <h3>Submission Guidelines</h3>
+        <p>Authors are invited to submit original research papers. All submissions will be double-blind peer-reviewed.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="#" class="btn">Submit via EasyChair (Coming Soon)</a>
+        </div>
+    </div>
+
+    <div id="organization" class="tab-content">
+        <h2>Organization</h2>
+        
+        <div class="card">
+            <h3>General Chair</h3>
+            <p><strong>Assoc. Prof. Dr. Ahmet SINAK</strong><br>
+            Akdeniz University / Kiel University</p>
+        </div>
+
+        <div class="card">
+            <h3>Program Chairs</h3>
+            <p><strong>Asst. Prof. Dr. Murat AK</strong><br>
+            Akdeniz University</p>
+            <p><strong>Asst. Prof. Dr. Aslı BAY</strong><br>
+            Akdeniz University</p>
+        </div>
+
+        <div class="card">
+            <h3>Local Organizing Committee</h3>
+            <p><strong>Assoc. Prof. Dr. Ahmet SINAK</strong><br>
+            Akdeniz University</p>
+            <p><strong>Asst. Prof. Dr. Murat AK</strong><br>
+            Akdeniz University</p>
+             <p><strong>Asst. Prof. Dr. Aslı BAY</strong><br>
+            Akdeniz University</p>
+        </div>
+    </div>
+
+    <div id="venue" class="tab-content">
+        <h2>Venue</h2>
+        <p>The academic program (October 8-9) will be held at:</p>
+        <address style="font-style: normal; font-size: 1.1em; margin-bottom: 20px;">
+            <strong>Akdeniz University Conference Hall</strong><br>
+            Pınarbaşı, Akdeniz Üniversitesi Kampüsü<br>
+            07070 Konyaaltı/Antalya, Türkiye
+        </address>
+        
+        <div style="width: 100%; height: 300px; background-color: #ddd; display: flex; align-items: center; justify-content: center; color: #555;">
+            [Map Placeholder: Akdeniz University Campus]
+        </div>
+
+        <h2>Social Event</h2>
+        <div class="social-event-highlight">
+            <h3>🌊 Rafting in Köprülü Canyon</h3>
+            <p><strong>Date:</strong> October 10, 2026</p>
+            <p>Join us for an unforgettable adventure in the heart of Antalya's nature! We will be organizing a rafting trip to the world-famous <strong>Köprülü Canyon National Park</strong>.</p>
+            <ul>
+                <li><strong>Transportation:</strong> Shuttle buses will depart from Akdeniz University at 09:00.</li>
+                <li><strong>Activity:</strong> 14km rafting course (suitable for beginners).</li>
+                <li><strong>Lunch:</strong> A riverside lunch is included.</li>
+            </ul>
+            <p><em>Please ensure you bring suitable swimwear and a change of clothes.</em></p>
+        </div>
+    </div>
+
+    <div id="contact" class="tab-content">
+        <h2>Contact Us</h2>
+        <p>For any questions regarding the conference, submission, or venue, please contact the organizing committee.</p>
+        
+        <p><strong>Email:</strong> <a href="mailto:info@lightsec2026.org">info@lightsec2026.org</a> (Placeholder)</p>
+        <p><strong>Phone:</strong> +90 242 123 45 67 (Akdeniz University Dept. of Computer Engineering)</p>
+    </div>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 LightSec Workshop. Hosted by Akdeniz University.</p>
+</footer>
+
+<script>
+    function openTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tab-content" and hide them
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].classList.remove("active");
+        }
+
+        // Get all elements with class="tab-button" and remove the class "active"
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("active");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+</script>
+
+</body>
+</html>

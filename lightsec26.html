@@ -9,10 +9,10 @@
             /* Akdeniz University / Antalya Inspired Colors */
             --primary-blue: #002855; /* Deep Academic Blue */
             --accent-orange: #f37021; /* Akdeniz Orange */
-            --light-bg: #f4f7f6;
-            --text-dark: #333;
+            --light-bg: #f8f9fa;
+            --text-dark: #2c3e50;
             --white: #ffffff;
-            --grey: #666;
+            --grey: #6c757d;
         }
 
         body {
@@ -24,47 +24,56 @@
             line-height: 1.6;
         }
 
-        /* Header Section */
-        header {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #004080 100%);
+        /* Banner Image */
+        .banner {
+            width: 100%;
+            height: 350px;
+            background-image: linear-gradient(rgba(0, 40, 85, 0.8), rgba(0, 40, 85, 0.6)), url('https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop'); /* Antalya Coast/City */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             color: var(--white);
-            padding: 2rem 1rem;
             text-align: center;
-            border-bottom: 5px solid var(--accent-orange);
+            padding: 20px;
         }
 
-        header h1 {
+        .banner h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        header p.subtitle {
-            font-size: 1.2rem;
+        .banner p.subtitle {
+            font-size: 1.4rem;
             margin-top: 0.5rem;
-            opacity: 0.9;
+            font-weight: 300;
         }
 
-        header .venue-date {
-            margin-top: 1rem;
-            display: inline-block;
-            background-color: rgba(255,255,255,0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+        .banner .venue-date {
+            margin-top: 1.5rem;
+            background-color: var(--accent-orange);
+            color: var(--white);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
             font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
-        /* Navigation / Tabs */
+        /* Navigation */
         nav {
             background-color: var(--white);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .nav-container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: center;
@@ -74,40 +83,40 @@
         .tab-button {
             background: none;
             border: none;
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 1.5rem;
             font-size: 1rem;
             cursor: pointer;
             color: var(--text-dark);
             transition: all 0.3s ease;
             font-weight: 600;
-            border-bottom: 3px solid transparent;
+            border-bottom: 4px solid transparent;
         }
 
         .tab-button:hover {
             color: var(--primary-blue);
-            background-color: #f9f9f9;
+            background-color: #f1f3f5;
         }
 
         .tab-button.active {
             color: var(--primary-blue);
-            border-bottom: 3px solid var(--accent-orange);
+            border-bottom: 4px solid var(--accent-orange);
         }
 
-        /* Main Content Area */
+        /* Main Content */
         main {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
-            background-color: var(--white);
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            min-height: 500px;
+            min-height: 600px;
         }
 
         .tab-content {
             display: none;
-            padding: 2rem;
-            animation: fadeIn 0.5s;
+            background-color: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            animation: fadeIn 0.4s ease-out;
         }
 
         .tab-content.active {
@@ -121,89 +130,108 @@
 
         h2 {
             color: var(--primary-blue);
-            border-bottom: 2px solid var(--accent-orange);
-            padding-bottom: 0.5rem;
+            border-left: 6px solid var(--accent-orange);
+            padding-left: 1rem;
             margin-top: 0;
         }
 
         h3 {
             color: var(--text-dark);
-            margin-top: 1.5rem;
+            margin-top: 2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
 
         /* Components */
-        .btn {
-            display: inline-block;
-            background-color: var(--accent-orange);
-            color: var(--white);
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background 0.3s;
-            border: none;
-            cursor: pointer;
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
         }
 
-        .btn:hover {
-            background-color: #d65a0e;
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .img-responsive {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
+            background: white;
         }
 
         th, td {
             text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
         }
 
         th {
             background-color: var(--primary-blue);
             color: var(--white);
+            width: 40%;
         }
 
-        tr:hover {
-            background-color: #f5f5f5;
+        .map-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         .sponsor-grid {
             display: flex;
-            gap: 20px;
+            gap: 30px;
             justify-content: center;
             margin-top: 2rem;
             flex-wrap: wrap;
         }
 
         .sponsor-placeholder {
-            width: 150px;
+            width: 160px;
             height: 80px;
-            background-color: #e0e0e0;
+            background-color: #eee;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
+            color: #888;
             font-weight: bold;
             border-radius: 4px;
-        }
-
-        .card {
-            background: #fff;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .social-event-highlight {
-            background-color: #fff8e1;
-            border-left: 5px solid var(--accent-orange);
-            padding: 1.5rem;
-            margin: 1.5rem 0;
+            font-size: 0.9rem;
         }
 
         /* Footer */
@@ -212,77 +240,78 @@
             padding: 2rem;
             background-color: var(--primary-blue);
             color: var(--white);
-            margin-top: 2rem;
-        }
-
-        footer a {
-            color: var(--accent-orange);
-            text-decoration: none;
+            margin-top: 4rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            header h1 { font-size: 1.8rem; }
-            .nav-container { flex-direction: column; }
-            .tab-button { width: 100%; text-align: center; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .banner h1 { font-size: 2rem; }
+            .tab-button { width: 100%; text-align: center; border-bottom: 1px solid #eee; }
+            .tab-button.active { border-bottom: 4px solid var(--accent-orange); }
         }
     </style>
 </head>
 <body>
 
-<header>
+<div class="banner">
     <h1>LightSec 2026</h1>
-    <p class="subtitle">7th International Workshop on Lightweight Cryptography for Security & Privacy</p>
+    <p class="subtitle">7th International Workshop on Lightweight Cryptography</p>
     <div class="venue-date">
-        October 8 – 10, 2026 &nbsp;|&nbsp; Akdeniz University, Antalya, Türkiye
+        October 8 – 10, 2026 &nbsp;|&nbsp; Akdeniz University, Antalya
     </div>
-</header>
+</div>
 
 <nav>
     <div class="nav-container">
         <button class="tab-button active" onclick="openTab(event, 'home')">Home</button>
         <button class="tab-button" onclick="openTab(event, 'program')">Program & Submission</button>
         <button class="tab-button" onclick="openTab(event, 'organization')">Organization</button>
-        <button class="tab-button" onclick="openTab(event, 'venue')">Venue & Social</button>
-        <button class="tab-button" onclick="openTab(event, 'contact')">Contact</button>
+        <button class="tab-button" onclick="openTab(event, 'venue')">Venue & Travel</button>
+        <button class="tab-button" onclick="openTab(event, 'social')">Social Activities</button>
     </div>
 </nav>
 
 <main>
     <div id="home" class="tab-content active">
-        <h2>Welcome to LightSec 2026</h2>
-        <p>LightSec 2026 continues the series' tradition of promoting novel research on security, privacy, and trust issues related to lightweight security. As new applications in AI, blockchain, IoT, and 5G/6G become ubiquitous, ensuring security with constrained resources is more critical than ever.</p>
+        <h2>About the Conference</h2>
+        <p>LightSec 2026 continues the tradition of promoting novel research on security, privacy, and trust issues related to lightweight security. As new applications in AI, blockchain, IoT, and 5G/6G become ubiquitous, ensuring security with constrained resources is more critical than ever.</p>
         
-        <p>This year, we are excited to host the workshop in the beautiful coastal city of Antalya, at <strong>Akdeniz University</strong>.</p>
-
-        <div style="background: #eef4ff; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <h3>📅 Important Dates (Tentative)</h3>
-            <table>
-                <tr>
-                    <td><strong>Paper Submission Deadline</strong></td>
-                    <td>June 12, 2026</td>
-                </tr>
-                <tr>
-                    <td><strong>Author Notification</strong></td>
-                    <td>August 14, 2026</td>
-                </tr>
-                <tr>
-                    <td><strong>Camera-Ready Version</strong></td>
-                    <td>September 11, 2026</td>
-                </tr>
-                <tr>
-                    <td><strong>Workshop Dates</strong></td>
-                    <td>October 8 – 9, 2026</td>
-                </tr>
-                 <tr>
-                    <td><strong>Social Event</strong></td>
-                    <td>October 10, 2026</td>
-                </tr>
-            </table>
+        <div class="grid-2">
+            <div>
+                <h3>Objective & Scope</h3>
+                <p>The main objective of LightSec 2026 is to bring together researchers and practitioners to discuss:</p>
+                <ul>
+                    <li>Lightweight Cryptography for IoT</li>
+                    <li>Resource-constrained Security Protocols</li>
+                    <li>Privacy in Edge Computing</li>
+                    <li>Efficient implementations of Post-Quantum Cryptography</li>
+                </ul>
+            </div>
+            <div>
+                <h3>Important Dates (Tentative)</h3>
+                <table>
+                    <tr>
+                        <th>Submission Deadline</th>
+                        <td>June 12, 2026</td>
+                    </tr>
+                    <tr>
+                        <th>Notification</th>
+                        <td>August 14, 2026</td>
+                    </tr>
+                    <tr>
+                        <th>Conference Dates</th>
+                        <td>October 8 – 9, 2026</td>
+                    </tr>
+                     <tr>
+                        <th>Social Event</th>
+                        <td>October 10, 2026</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <h3>Sponsors</h3>
-        <p>We are grateful for the support of our sponsors:</p>
         <div class="sponsor-grid">
             <div class="sponsor-placeholder">GOOGLE</div>
             <div class="sponsor-placeholder">APPLE</div>
@@ -292,113 +321,155 @@
 
     <div id="program" class="tab-content">
         <h2>Call For Papers</h2>
-        <p>LightSec 2026 enthusiastically welcomes papers on algorithms, protocols, techniques, and their secure and efficient implementations for applications utilizing advanced cryptographic algorithms.</p>
+        <p>LightSec 2026 welcomes papers on algorithms, protocols, techniques, and their secure and efficient implementations.</p>
 
         <h3>Topics of Interest</h3>
-        <ul>
-            <li>Lightweight Cryptography for IoT and Cyber-Physical Systems</li>
-            <li>Post-Quantum Cryptography on Constrained Devices</li>
-            <li>Efficient Zero-Knowledge Proofs & Homomorphic Encryption</li>
-            <li>Hardware Security (FPGA/ASIC implementations)</li>
-            <li>Side-Channel Analysis and Countermeasures</li>
-            <li>Privacy-Preserving AI/ML on Edge Devices</li>
+        <ul class="grid-2" style="list-style-type: none; padding: 0;">
+            <li class="card"> Lightweight Cryptography for IoT</li>
+            <li class="card"> Post-Quantum Cryptography on Constrained Devices</li>
+            <li class="card"> Efficient Zero-Knowledge Proofs</li>
+            <li class="card"> Hardware Security (FPGA/ASIC)</li>
+            <li class="card"> Side-Channel Analysis</li>
+            <li class="card"> Privacy-Preserving AI on Edge</li>
         </ul>
 
-        <h3>Submission Guidelines</h3>
-        <p>Authors are invited to submit original research papers. All submissions will be double-blind peer-reviewed.</p>
-        
-        <div style="text-align: center; margin: 30px 0;">
-            <a href="#" class="btn">Submit via EasyChair (Coming Soon)</a>
-        </div>
+        <h3>Submission</h3>
+        <p>Details regarding the submission process via EasyChair will be announced shortly.</p>
     </div>
 
     <div id="organization" class="tab-content">
         <h2>Organization</h2>
         
-        <div class="card">
-            <h3>General Chair</h3>
-            <p><strong>Assoc. Prof. Dr. Ahmet SINAK</strong><br>
-            Akdeniz University / Kiel University</p>
-        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>Organizing Committee (Düzenleme Kurulu)</h3>
+                <p><strong>General Chair:</strong><br>
+                Assoc. Prof. Dr. Ahmet SINAK (Akdeniz University)</p>
+                
+                <p><strong>Program Chairs:</strong><br>
+                Asst. Prof. Dr. Aslı BAY (Antalya Bilim University)<br>
+                Asst. Prof. Dr. Murat AK (Akdeniz University)</p>
 
-        <div class="card">
-            <h3>Program Chairs</h3>
-            <p><strong>Asst. Prof. Dr. Murat AK</strong><br>
-            Akdeniz University</p>
-            <p><strong>Asst. Prof. Dr. Aslı BAY</strong><br>
-            Akdeniz University</p>
-        </div>
+                <p><strong>Local Organizing Committee:</strong><br>
+                Assoc. Prof. Dr. Ahmet SINAK<br>
+                Asst. Prof. Dr. Aslı BAY<br>
+                Asst. Prof. Dr. Murat AK</p>
+            </div>
 
-        <div class="card">
-            <h3>Local Organizing Committee</h3>
-            <p><strong>Assoc. Prof. Dr. Ahmet SINAK</strong><br>
-            Akdeniz University</p>
-            <p><strong>Asst. Prof. Dr. Murat AK</strong><br>
-            Akdeniz University</p>
-             <p><strong>Asst. Prof. Dr. Aslı BAY</strong><br>
-            Akdeniz University</p>
+            <div class="card">
+                <h3>Scientific Committee (Bilim Kurulu)</h3>
+                <p><em>The full list of Scientific Committee members will be announced after confirmation.</em></p>
+                <ul>
+                    <li>Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
+                    <li>Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
+                    <li>Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
+                    <li>Assoc. Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
+                    <li>Dr. Name Surname (Affiliation) - Placeholder</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div id="venue" class="tab-content">
-        <h2>Venue</h2>
-        <p>The academic program (October 8-9) will be held at:</p>
-        <address style="font-style: normal; font-size: 1.1em; margin-bottom: 20px;">
-            <strong>Akdeniz University Conference Hall</strong><br>
-            Pınarbaşı, Akdeniz Üniversitesi Kampüsü<br>
-            07070 Konyaaltı/Antalya, Türkiye
-        </address>
+        <h2>Venue & Travel</h2>
         
-        <div style="width: 100%; height: 300px; background-color: #ddd; display: flex; align-items: center; justify-content: center; color: #555;">
-            [Map Placeholder: Akdeniz University Campus]
+        <p>The conference will be held at <strong>Akdeniz University</strong>, located in the Konyaaltı district of Antalya.</p>
+
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.045095861592!2d30.65487731569666!3d36.88856697993064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c391d451430033%3A0x6734107144405367!2sAkdeniz%20University!5e0!3m2!1sen!2str!4v1678123456789!5m2!1sen!2str" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        <h2>Social Event</h2>
-        <div class="social-event-highlight">
-            <h3>🌊 Rafting in Köprülü Canyon</h3>
-            <p><strong>Date:</strong> October 10, 2026</p>
-            <p>Join us for an unforgettable adventure in the heart of Antalya's nature! We will be organizing a rafting trip to the world-famous <strong>Köprülü Canyon National Park</strong>.</p>
-            <ul>
-                <li><strong>Transportation:</strong> Shuttle buses will depart from Akdeniz University at 09:00.</li>
-                <li><strong>Activity:</strong> 14km rafting course (suitable for beginners).</li>
-                <li><strong>Lunch:</strong> A riverside lunch is included.</li>
-            </ul>
-            <p><em>Please ensure you bring suitable swimwear and a change of clothes.</em></p>
+        <h3>How to Get There</h3>
+        
+        <div class="grid-2">
+            <div class="card">
+                <h4> From Antalya Airport (AYT)</h4>
+                <p><strong>By Taxi:</strong> Taxis are available 24/7 at the arrival terminals. The ride to the university takes about 25-30 minutes.</p>
+                <p><strong>By Tram (Antray):</strong> You can take the tram from the Airport station directly to the city center and transfer to the bus lines or take the tram towards Fatih and get off at the nearest stop to the campus.</p>
+                <p><strong>By Bus:</strong> Municipal bus number 600 or 800 connects the airport to the city center/bus terminal.</p>
+            </div>
+
+            <div class="card">
+                <h4> Arriving by Car</h4>
+                <p>Akdeniz University is located near the D400 highway.</p>
+                <ul>
+                    <li><strong>From West (Kemer/Muğla):</strong> Follow D400 towards Antalya Center. The university will be on your left as you enter the city.</li>
+                    <li><strong>From East (Alanya/Side):</strong> Follow D400 through the city, following signs for Kemer/Muğla.</li>
+                </ul>
+                <p><em>Parking is available on campus (Guest verification may be required at the gate).</em></p>
+            </div>
         </div>
     </div>
 
-    <div id="contact" class="tab-content">
-        <h2>Contact Us</h2>
-        <p>For any questions regarding the conference, submission, or venue, please contact the organizing committee.</p>
-        
-        <p><strong>Email:</strong> <a href="mailto:info@lightsec2026.org">info@lightsec2026.org</a> (Placeholder)</p>
-        <p><strong>Phone:</strong> +90 242 123 45 67 (Akdeniz University Dept. of Computer Engineering)</p>
+    <div id="social" class="tab-content">
+        <h2>Social Program</h2>
+        <p>Antalya offers a unique blend of history, nature, and sea. We have organized a main event, but also provide suggestions for those wishing to explore on their own.</p>
+
+        <div style="background-color: #e3f2fd; padding: 20px; border-radius: 8px; border-left: 5px solid #2196f3; margin-bottom: 30px;">
+            <h3 style="margin-top:0; color: #0d47a1;">🚣‍♂️ Main Event: Rafting in Köprülü Canyon</h3>
+            <div class="grid-2">
+                <div>
+                    <p><strong>Date:</strong> October 10, 2026</p>
+                    <p>Join us for an adrenaline-filled day at Köprülü Canyon National Park. The rafting course is 14km long and suitable for beginners.</p>
+                    <ul>
+                        <li>Shuttle departs Akdeniz University: 09:00</li>
+                        <li>Equipment and Lunch included.</li>
+                    </ul>
+                </div>
+                <img src="https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=1000&auto=format&fit=crop" alt="Rafting" class="img-responsive" style="height: 200px;">
+            </div>
+        </div>
+
+        <h3>Alternative Recreation Suggestions</h3>
+        <p>For participants who prefer to explore independently on October 10, here are our top recommendations:</p>
+
+        <div class="grid-3">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1596316209358-0029b37c02c6?q=80&w=1000&auto=format&fit=crop" alt="Kaleiçi" class="img-responsive">
+                <h4>History & City Life</h4>
+                <p><strong>Kaleiçi (Old Town):</strong> Explore the narrow streets, Hadrian's Gate, and boutique cafes.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1542378125-c653d9434827?q=80&w=1000&auto=format&fit=crop" alt="Beach" class="img-responsive">
+                <h4>Sea & Sun</h4>
+                <p><strong>Konyaaltı Beach:</strong> Just minutes from the university.<br>
+                <strong>Kemer / Phaselis:</strong> For pristine bays and ancient ruins right by the water.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1647432454378-d218d6c07577?q=80&w=1000&auto=format&fit=crop" alt="Ancient Ruins" class="img-responsive">
+                <h4>Ancient Cities</h4>
+                <p><strong>Perge & Aspendos:</strong> Visit the best-preserved Roman theater in the world.<br>
+                <strong>Termessos:</strong> The mountaintop city that Alexander the Great couldn't conquer.</p>
+            </div>
+            
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1533241243577-622877db3df2?q=80&w=1000&auto=format&fit=crop" alt="Nature" class="img-responsive">
+                <h4>Nature</h4>
+                <p><strong>Karain Cave:</strong> One of the oldest settlements in Anatolia.<br>
+                <strong>Olympos/Chimaera:</strong> Treehouses and the eternal flames.</p>
+            </div>
+        </div>
     </div>
 
 </main>
 
 <footer>
-    <p>&copy; 2026 LightSec Workshop. Hosted by Akdeniz University.</p>
+    <p>&copy; 2026 LightSec Workshop. Hosted by Akdeniz University Computer Engineering Dept.</p>
 </footer>
 
 <script>
     function openTab(evt, tabName) {
-        // Declare all variables
         var i, tabcontent, tablinks;
-
-        // Get all elements with class="tab-content" and hide them
         tabcontent = document.getElementsByClassName("tab-content");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].classList.remove("active");
         }
-
-        // Get all elements with class="tab-button" and remove the class "active"
         tablinks = document.getElementsByClassName("tab-button");
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].classList.remove("active");
         }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
     }

@@ -142,6 +142,11 @@
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
         }
+        
+        h4 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
 
         /* Components */
         .grid-2 {
@@ -234,6 +239,18 @@
             border-radius: 4px;
             font-size: 0.9rem;
         }
+        
+        .direction-link {
+            display: inline-block;
+            margin-top: 5px;
+            color: var(--accent-orange);
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        .direction-link:hover {
+            text-decoration: underline;
+        }
 
         /* Footer */
         footer {
@@ -259,7 +276,7 @@
     <h1>LightSec 2026</h1>
     <p class="subtitle">7th International Workshop on Lightweight Cryptography</p>
     <div class="venue-date">
-        October 8 – 10, 2026 &nbsp;|&nbsp; Akdeniz University, Antalya
+        October 8 – 10, 2026  |  Akdeniz University, Antalya
     </div>
 </div>
 
@@ -269,6 +286,7 @@
         <button class="tab-button" onclick="openTab(event, 'program')">Program & Submission</button>
         <button class="tab-button" onclick="openTab(event, 'organization')">Organization</button>
         <button class="tab-button" onclick="openTab(event, 'venue')">Venue & Travel</button>
+        <button class="tab-button" onclick="openTab(event, 'accommodation')">Accommodation</button>
         <button class="tab-button" onclick="openTab(event, 'social')">Social Activities</button>
     </div>
 </nav>
@@ -322,20 +340,31 @@
 
     <div id="program" class="tab-content">
         <h2>Call For Papers</h2>
-        <p>LightSec 2026 welcomes papers on algorithms, protocols, techniques, and their secure and efficient implementations.</p>
+        <p>LightSec 2026 enthusiastically welcomes papers on algorithms, protocols, techniques, and their secure and efficient implementations for applications utilizing advanced cryptographic algorithms.</p>
 
         <h3>Topics of Interest</h3>
-        <ul class="grid-2" style="list-style-type: none; padding: 0;">
-            <li class="card">✅ Lightweight Cryptography for IoT</li>
-            <li class="card">✅ Post-Quantum Cryptography on Constrained Devices</li>
-            <li class="card">✅ Efficient Zero-Knowledge Proofs</li>
-            <li class="card">✅ Hardware Security (FPGA/ASIC)</li>
-            <li class="card">✅ Side-Channel Analysis</li>
-            <li class="card">✅ Privacy-Preserving AI on Edge</li>
+        <p>We invite submissions on a wide range of topics, including but not limited to:</p>
+        <ul style="columns: 2; -webkit-columns: 2; -moz-columns: 2; margin-top: 1rem;">
+            <li>Design, analysis and implementation of lightweight cryptographic schemes</li>
+            <li>Cryptographic hardware development for constrained domains</li>
+            <li>Side channel and fault analysis and countermeasures</li>
+            <li>Efficient and secure post-quantum cryptographic algorithms</li>
+            <li>Security and privacy solutions for 5G/6G networks</li>
+            <li>Security and privacy solutions for IoT</li>
+            <li>Fast, efficient and secure acceleration solutions</li>
+            <li>Cryptographic solutions for RISC-V ecosystem</li>
+            <li>Lightweight solutions for privacy-preserving ML on edge</li>
+            <li>Efficient cryptographic solutions for blockchain</li>
+            <li>Formal methods for analysis of lightweight protocols</li>
+            <li>AI for cryptography & Security implications of AI</li>
         </ul>
 
-        <h3>Submission</h3>
-        <p>Details regarding the submission process via EasyChair will be announced shortly.</p>
+        <h3>Submission Guidelines</h3>
+        <p>Authors are invited to submit original research papers. All submissions will be double-blind peer-reviewed. Detailed formatting instructions and the submission link (EasyChair) will be provided here shortly.</p>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <button class="btn" style="background-color: #ccc; cursor: not-allowed; padding: 10px 20px; border:none; border-radius:5px; color: #666;">Submit Paper (Link Coming Soon)</button>
+        </div>
     </div>
 
     <div id="organization" class="tab-content">
@@ -377,28 +406,58 @@
         <p>The conference will be held at <strong>Akdeniz University</strong>, located in the Konyaaltı district of Antalya.</p>
 
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3191.045095861592!2d30.65487731569666!3d36.88856697993064!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c391d451430033%3A0x6734107144405367!2sAkdeniz%20University!5e0!3m2!1sen!2str!4v1678123456789!5m2!1sen!2str" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/place/Akdeniz+%C3%9Cniversitesi+Sosyal+Tesisler/@36.8924916,30.6578268,713m/data=!3m1!1e3!4m6!3m5!1s0x14c391cda532111d:0xf6604662f3787130!8m2!3d36.8921907!4d30.6617627!16s%2Fg%2F1hc2zzgrq?entry=ttu&g_ep=EgoyMDI2MDIwOS4wIKXMDSoASAFQAw%3D%3D" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
         <h3>How to Get There</h3>
         
         <div class="grid-2">
             <div class="card">
-                <h4>✈️ From Antalya Airport (AYT)</h4>
+                <h4>From Antalya Airport (AYT)</h4>
                 <p><strong>By Taxi:</strong> Taxis are available 24/7 at the arrival terminals. The ride to the university takes about 25-30 minutes.</p>
                 <p><strong>By Tram (Antray):</strong> You can take the tram from the Airport station directly to the city center and transfer to the bus lines or take the tram towards Fatih and get off at the nearest stop to the campus.</p>
                 <p><strong>By Bus:</strong> Municipal bus number 600 or 800 connects the airport to the city center/bus terminal.</p>
             </div>
 
             <div class="card">
-                <h4>🚗 Arriving by Car</h4>
+                <h4>Arriving by Car</h4>
                 <p>Akdeniz University is located near the D400 highway.</p>
-                <ul>
-                    <li><strong>From West (Kemer/Muğla):</strong> Follow D400 towards Antalya Center. The university will be on your left as you enter the city.</li>
-                    <li><strong>From East (Alanya/Side):</strong> Follow D400 through the city, following signs for Kemer/Muğla.</li>
-                </ul>
-                <p><em>Parking is available on campus (Guest verification may be required at the gate).</em></p>
+                
+                <p><strong>From West (Kemer/Muğla):</strong><br>
+                Follow D400 towards Antalya Center. The university will be on your right as you enter the city.<br>
+                <a href="https://maps.app.goo.gl/pkC7kTVwN9GQdnvW9" class="direction-link" target="_blank">Get Directions →</a></p>
+                
+                <p><strong>From East (Airport(AYT)/Alanya/Side):</strong><br>
+                Follow D400 through the city, following signs for Akdeniz Universitesi.<br>
+                <a href="https://maps.app.goo.gl/H7ej78UbUcxWUz73A" class="direction-link" target="_blank">Get Directions →</a></p>
+                
+                <p><strong>From North (Istanbul/Ankara/Izmir):</strong><br>
+                Follow D650 and Antalya Bulvari towards Antalya City Center and then Dumlupinar Bulvari towards Akdeniz University.<br>
+                <a href="https://maps.app.goo.gl/EYqxU2pFeAN1Wz877" class="direction-link" target="_blank">Get Directions →</a></p>
+
+                <p style="margin-top: 15px; font-style: italic; color: #666;">Parking is available on campus (Guest verification may be required at the gate).</p>
             </div>
+        </div>
+    </div>
+
+    <div id="accommodation" class="tab-content">
+        <h2>Accommodation</h2>
+        <p>We recommend the following accommodation option located directly on the university campus for your convenience.</p>
+
+        <div class="card">
+            <h3>Akdeniz University Social Facilities (Sosyal Tesisleri)</h3>
+            <p><strong>Location:</strong> Within the Akdeniz University Campus (Walking distance to the venue).</p>
+            <p>The Social Facilities offer comfortable rooms in a peaceful environment right next to the conference venue. It is the most convenient option for attendees.</p>
+            
+            <p><strong>Booking:</strong><br>
+            Please contact the facility directly to make a reservation, mentioning "LightSec 2026".</p>
+            
+            <p>
+                <strong>Phone:</strong> +90 242 227 44 00 (Placeholder)<br>
+                <strong>Email:</strong> sosyaltesisler@akdeniz.edu.tr (Placeholder)
+            </p>
+            
+            <a href="#" class="direction-link" style="color: var(--primary-blue);">Visit Website (Coming Soon)</a>
         </div>
     </div>
 
@@ -414,7 +473,7 @@
                     <p>Join us for an adrenaline-filled day at Köprülü Canyon National Park. The rafting course is 14km long and suitable for beginners.</p>
                     <ul>
                         <li>Shuttle departs Akdeniz University: 09:00</li>
-                        <li>Equipment and Lunch included.</li>
+                        <li><em>Fee: To be announced.</em></li>
                     </ul>
                 </div>
                 <img src="koprulu.jpg" alt="Rafting" class="img-responsive" style="height: 200px;">
@@ -455,7 +514,7 @@
 </main>
 
 <footer>
-    <p>&copy; 2026 LightSec Workshop. Hosted by Akdeniz University Computer Engineering Dept.</p>
+    <p>© 2026 LightSec Workshop. Hosted by Akdeniz University Computer Engineering Dept.</p>
 </footer>
 
 <script>

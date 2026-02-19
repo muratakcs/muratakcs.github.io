@@ -24,38 +24,51 @@
             line-height: 1.6;
         }
 
-        /* Banner Image */
+        /* Banner Image - Updated to Glassmorphism */
         .banner {
             width: 100%;
             height: 400px;
-            /* Using local image 'antalya.jpg' */
-            background-image: linear-gradient(rgba(0, 40, 85, 0.7), rgba(0, 40, 85, 0.5)), url('antalya.jpg'); 
+            /* No color overlay, just the raw image */
+            background-image: url('antalya.jpg'); 
             background-size: cover;
             background-position: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            color: var(--white);
-            text-align: center;
             padding: 20px;
         }
 
-        .banner h1 {
+        /* The Transparent Glass Filter Panel */
+        .glass-panel {
+            background: rgba(0, 40, 85, 0.35); /* Slight tint for readability */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px 50px;
+            text-align: center;
+            color: var(--white);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .glass-panel h1 {
             margin: 0;
             font-size: 3rem;
             font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
 
-        .banner p.subtitle {
+        .glass-panel p.subtitle {
             font-size: 1.4rem;
             margin-top: 0.5rem;
             font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        .banner .venue-date {
+        .glass-panel .venue-date {
             margin-top: 1.5rem;
+            display: inline-block;
             background-color: var(--accent-orange);
             color: var(--white);
             padding: 0.8rem 1.5rem;
@@ -240,7 +253,7 @@
             font-size: 0.9rem;
         }
         
-        .direction-link {
+        .direction-link, .profile-link {
             display: inline-block;
             margin-top: 5px;
             color: var(--accent-orange);
@@ -248,8 +261,22 @@
             text-decoration: none;
         }
         
-        .direction-link:hover {
+        .direction-link:hover, .profile-link:hover {
             text-decoration: underline;
+        }
+
+        .committee-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .committee-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .committee-list li:last-child {
+            border-bottom: none;
         }
 
         /* Footer */
@@ -264,7 +291,8 @@
         /* Responsive */
         @media (max-width: 768px) {
             .grid-2 { grid-template-columns: 1fr; }
-            .banner h1 { font-size: 2rem; }
+            .glass-panel h1 { font-size: 2rem; }
+            .glass-panel { padding: 20px; }
             .tab-button { width: 100%; text-align: center; border-bottom: 1px solid #eee; }
             .tab-button.active { border-bottom: 4px solid var(--accent-orange); }
         }
@@ -273,10 +301,12 @@
 <body>
 
 <div class="banner">
-    <h1>LightSec 2026</h1>
-    <p class="subtitle">7th International Workshop on Lightweight Cryptography</p>
-    <div class="venue-date">
-        October 8 – 10, 2026  |  Akdeniz University, Antalya
+    <div class="glass-panel">
+        <h1>LightSec 2026</h1>
+        <p class="subtitle">7th International Workshop on Lightweight Cryptography</p>
+        <div class="venue-date">
+            October 8 – 10, 2026 &nbsp;|&nbsp; Akdeniz University, Antalya
+        </div>
     </div>
 </div>
 
@@ -371,32 +401,67 @@
         <h2>Organization</h2>
         
         <div class="grid-2">
-            <div class="card">
-                <h3>Organizing Committee (Düzenleme Kurulu)</h3>
-                <p><strong>General Chair:</strong><br>
-                Assoc. Prof. Dr. Ahmet SINAK (Akdeniz University)</p>
-                
-                <p><strong>Program Chairs:</strong><br>
-                Asst. Prof. Dr. Aslı BAY (Antalya Bilim University)<br>
-                Asst. Prof. Dr. Murat AK (Akdeniz University)</p>
+            <div>
+                <div class="card" style="margin-bottom: 20px;">
+                    <h3>General Chair</h3>
+                    <p><strong>Ahmet SINAK</strong><br>
+                    Akdeniz University, ANTALYA<br>
+                    <a href="https://avesis.akdeniz.edu.tr/ahmetsinak" target="_blank" class="profile-link" style="color: var(--primary-blue); font-weight: normal; margin-right: 10px;">View Profile</a>
+                    <a href="mailto:ahmetsinak@akdeniz.edu.tr" class="profile-link" style="color: var(--primary-blue); font-weight: normal;">ahmetsinak@akdeniz.edu.tr</a></p>
+                </div>
 
-                <p><strong>Local Organizing Committee:</strong><br>
-                Assoc. Prof. Dr. Ahmet SINAK<br>
-                Asst. Prof. Dr. Aslı BAY<br>
-                Asst. Prof. Dr. Murat AK</p>
+                <div class="card">
+                    <h3>Program Co-Chairs</h3>
+                    <p><strong>Aydın AYSU</strong><br>
+                    Electrical and Computer Engineering, NC State University<br>
+                    <a href="https://ece.ncsu.edu/people/aaysu/" target="_blank" class="profile-link" style="color: var(--primary-blue); font-weight: normal; margin-right: 10px;">View Profile</a>
+                    <a href="mailto:aaysu@ncsu.edu" class="profile-link" style="color: var(--primary-blue); font-weight: normal;">aaysu@ncsu.edu</a></p>
+                    
+                    <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+                    
+                    <p><strong>Elif Bilge KAVUN</strong><br>
+                    Faculty of Computer Science, Dresden University of Technology, Germany<br>
+                    <a href="https://www.barkhauseninstitut.org/en/people/elif-bilge-kavun" target="_blank" class="profile-link" style="color: var(--primary-blue); font-weight: normal; margin-right: 10px;">View Profile</a>
+                    <a href="mailto:elifbilgekavun@gmail.com" class="profile-link" style="color: var(--primary-blue); font-weight: normal;">elifbilgekavun@gmail.com</a></p>
+                </div>
             </div>
 
             <div class="card">
-                <h3>Scientific Committee (Bilim Kurulu)</h3>
-                <p><em>The full list of Scientific Committee members will be announced after confirmation.</em></p>
-                <ul>
-                    <li>Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
-                    <li>Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
-                    <li>Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
-                    <li>Assoc. Prof. Dr. Name Surname (Affiliation) - Placeholder</li>
-                    <li>Dr. Name Surname (Affiliation) - Placeholder</li>
+                <h3>Organizing Committee</h3>
+                <ul class="committee-list">
+                    <li>
+                        <strong>Murat AK</strong>, Akdeniz University, ANTALYA<br>
+                        <a href="https://avesis.akdeniz.edu.tr/muratak" target="_blank" class="profile-link" style="font-size: 0.9em;">View Profile</a>
+                    </li>
+                    <li>
+                        <strong>Sedat AKLEYLEK</strong>, University of Tartu, ESTONIA<br>
+                        <a href="https://ut.ee/en/employee/sedat-akleylek" target="_blank" class="profile-link" style="font-size: 0.9em;">View Profile</a>
+                    </li>
+                    <li>
+                        <strong>Mustafa Alkan</strong>, Akdeniz University, ANTALYA<br>
+                        <a href="https://avesis.akdeniz.edu.tr/alkan" target="_blank" class="profile-link" style="font-size: 0.9em;">View Profile</a>
+                    </li>
+                    <li>
+                        <strong>Aslı BAY</strong>, Antalya Bilim University, ANTALYA<br>
+                        <a href="https://antalya.edu.tr/tr/akademik-kadro/muhendislik-fakultesi/asli-bay" target="_blank" class="profile-link" style="font-size: 0.9em;">View Profile</a>
+                    </li>
+                    <li>
+                        <strong>Orhun KARA</strong>, İzmir Institute of Technology, İZMİR<br>
+                        <a href="https://cse.iyte.edu.tr/doc-dr-orhun-kara/" target="_blank" class="profile-link" style="font-size: 0.9em;">View Profile</a>
+                    </li>
+                    <li>
+                        <strong>Mustafa Özdemir</strong>, Akdeniz University, ANTALYA
+                    </li>
+                    <li>
+                        <strong>Kamil Otal</strong>, TÜBİTAK-BİLGEM
+                    </li>
                 </ul>
             </div>
+        </div>
+        
+        <div class="card" style="margin-top: 20px;">
+            <h3>Scientific Committee (Bilim Kurulu)</h3>
+            <p><em>The full list of Scientific Committee members will be announced after confirmation.</em></p>
         </div>
     </div>
 

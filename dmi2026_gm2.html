@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH 221 — Discrete Mathematics I — Syllabus</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1e3a8a;
+    --primary-light: #eff6ff;
+    --accent: #be123c;
+    --accent-light: #ffe4e6;
+    --bg-page: #f1f5f9;
+    --bg-card: #ffffff;
+    --text-main: #334155;
+    --text-heading: #0f172a;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --radius: 12px;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+    line-height: 1.6;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 20px auto 60px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  /* Header Styles */
+  header.hero {
+    background: linear-gradient(135deg, var(--primary), #3b82f6);
+    color: #ffffff;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  header.hero .course-code {
+    font-family: 'Fira Code', monospace;
+    font-size: 1.25rem;
+    color: #93c5fd;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  header.hero .course-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 10px 0;
+    line-height: 1.2;
+  }
+
+  header.hero .semester {
+    font-size: 1.1rem;
+    color: #bfdbfe;
+    font-weight: 500;
+  }
+
+  /* Content Area */
+  .content {
+    padding: 40px 50px;
+  }
+
+  /* Info Grid */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: -70px;
+    margin-bottom: 40px;
+    padding: 0 50px;
+  }
+
+  .info-card {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    text-align: center;
+  }
+
+  .info-card .label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .info-card .value {
+    font-weight: 600;
+    color: var(--text-heading);
+    font-size: 1.05rem;
+  }
+
+  .info-card a {
+    color: var(--primary);
+    text-decoration: none;
+    word-break: break-all;
+  }
+
+  .info-card a:hover {
+    text-decoration: underline;
+  }
+
+  /* Typography */
+  h2.section-title {
+    font-size: 1.5rem;
+    color: var(--text-heading);
+    font-weight: 700;
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  p {
+    margin-bottom: 16px;
+  }
+
+  /* Lists */
+  ul.styled-list {
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
+  ul.styled-list > li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 12px;
+  }
+
+  ul.styled-list > li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: bold;
+  }
+
+  ul.styled-list ul {
+    margin-top: 10px;
+    list-style-type: circle;
+    padding-left: 20px;
+    color: var(--text-muted);
+  }
+
+  /* Table Styles */
+  .table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 30px;
+  }
+
+  table.schedule {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  table.schedule th, table.schedule td {
+    padding: 14px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  table.schedule th {
+    background-color: var(--bg-page);
+    color: var(--text-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  table.schedule tbody tr {
+    transition: background-color 0.2s ease;
+  }
+
+  table.schedule tbody tr:hover {
+    background-color: var(--primary-light);
+  }
+
+  table.schedule td.week {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  table.schedule tr.midterm {
+    background-color: var(--accent-light);
+  }
+  
+  table.schedule tr.midterm:hover {
+    background-color: #fce7eb;
+  }
+
+  table.schedule tr.midterm td {
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .tentative {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-top: -15px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  /* Warning Box */
+  .warning-box {
+    background-color: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 24px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin: 20px 0;
+  }
+
+  .warning-box .highlight {
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    background-color: var(--bg-page);
+    border-top: 1px solid var(--border-color);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    header.hero {
+      padding: 40px 20px;
+    }
+    
+    header.hero .course-title {
+      font-size: 2rem;
+    }
+
+    .info-grid {
+      padding: 0 20px;
+      margin-top: -30px;
+    }
+
+    .content {
+      padding: 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    header.hero .course-title {
+      font-size: 1.75rem;
+    }
+    .info-grid {
+      grid-template-columns: 1fr;
+      margin-top: 20px;
+    }
+    .info-card {
+      box-shadow: none;
+      border: 1px solid var(--border-color);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="course-code">MATH 221</div>
+    <h1 class="course-title">Discrete Mathematics I</h1>
+    <div class="semester">Fall 2026</div>
+  </header>
+
+  <!-- Info Cards -->
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="label">Instructor</div>
+      <div class="value">Murat Ak</div>
+    </div>
+    <div class="info-card">
+      <div class="label">Email</div>
+      <div class="value"><a href="mailto:muratak@akdeniz.edu.tr">muratak@akdeniz.edu.tr</a></div>
+    </div>
+    <div class="info-card">
+      <div class="label">Weekly Schedule</div>
+      <div class="value">Mon 13:30–17:20<br>Room D206</div>
+    </div>
+  </div>
+
+  <div class="content">
+    
+    <h2 class="section-title">Textbooks</h2>
+    <ul class="styled-list">
+      <li><strong>Required:</strong> Grimaldi, <em>Discrete and Combinatorial Mathematics: An Applied Introduction</em>, 5th Edition, Pearson, 2003.</li>
+      <li><strong>Suggested:</strong> Rosen, <em>Discrete Mathematics and Its Applications</em>, 7th Edition, McGraw-Hill Edu., 2011.</li>
+      <li><strong>Suggested:</strong> Graham, Knuth, Patashnik, <em>Concrete Mathematics</em>, 2nd Edition, Addison-Wesley, 1994.</li>
+      <li><strong>Suggested:</strong> Ross, <em>Topics in Finite and Discrete Mathematics</em>, Cambridge, 2004.</li>
+      <li><a href="https://akmurat.notion.site/06157f99c00c4dc3974e0ed4ab297652?v=a6eab042dd68473c8935090a87e5823f" target="_blank" rel="noopener">All recommended books & resources</a></li>
+    </ul>
+
+    <h2 class="section-title">Objectives</h2>
+    <p>This course is designed for computer engineering undergraduate students. Its aim is to introduce the terminology, available methods, and ideas in discrete mathematics to future computer scientists/engineers.</p>
+
+    <h2 class="section-title">Grading Policy</h2>
+    <ul class="styled-list">
+      <li><strong>Midterm (40%)</strong> — Counting Principles</li>
+      <li><strong>Final (60%)</strong> — Advanced Counting</li>
+      <li><strong>Bonus: Participation (?%)</strong> — High-quality contribution during the lectures (questions, answers, etc.) will get instant bonus points, added to exam grades later.</li>
+    </ul>
+
+    <h2 class="section-title">Course Outline</h2>
+    <span class="tentative">Note: The schedule is tentative and may change due to the midterm week or other factors.</span>
+    
+    <div class="table-responsive">
+      <table class="schedule">
+        <thead>
+          <tr>
+            <th>Week / Dates</th>
+            <th>Day 1 Subject</th>
+            <th>Day 2 Subject</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="week">01 | Sep 18/20</td>
+            <td>Course info</td>
+            <td>Counting Basics (1.1, 1.2)</td>
+          </tr>
+          <tr>
+            <td class="week">02 | Sep 25/27</td>
+            <td>Combinations (1.3, 1.4)</td>
+            <td>Catalan Numbers (1.5)</td>
+          </tr>
+          <tr>
+            <td class="week">03 | Oct 02/04</td>
+            <td>Logic Basics (2.1, 2.2, 2.3)</td>
+            <td>Quantifiers (2.4, 2.5)</td>
+          </tr>
+          <tr>
+            <td class="week">04 | Oct 09/11</td>
+            <td>Math. Induction (4.1, 4.2)</td>
+            <td>Divisibility (4.3, 4.4, 4.5)</td>
+          </tr>
+          <tr>
+            <td class="week">05 | Oct 16/18</td>
+            <td>Relations (5.1–5.4)</td>
+            <td>Pigeonhole Pr. (5.5)</td>
+          </tr>
+          <tr>
+            <td class="week">06 | Oct 23/25</td>
+            <td>Relations (7.1–7.4)</td>
+            <td>Relations (7.1–7.4)</td>
+          </tr>
+          <tr>
+            <td class="week">07 | Oct 30/Nov 01</td>
+            <td>Problem Solving</td>
+            <td>Midterm Review</td>
+          </tr>
+          <tr class="midterm">
+            <td class="week">08 | Nov 06/08</td>
+            <td>Midterm Week</td>
+            <td>Midterm Week</td>
+          </tr>
+          <tr>
+            <td class="week">09 | Nov 13/15</td>
+            <td>Inc-Exc (8.1–8.2)</td>
+            <td>Inc-Exc (8.1–8.2)</td>
+          </tr>
+          <tr>
+            <td class="week">10 | Nov 20/22</td>
+            <td>Derangements (8.3)</td>
+            <td>Rook Poly. (8.4–8.5)</td>
+          </tr>
+          <tr>
+            <td class="week">11 | Nov 27/29</td>
+            <td>Gen. Func. (9.3–9.5)</td>
+            <td>Gen. Func. (9.3–9.5)</td>
+          </tr>
+          <tr>
+            <td class="week">12 | Dec 04/06</td>
+            <td>Recurrence Relations (10.1)</td>
+            <td>Recurrence Relations (10.2)</td>
+          </tr>
+          <tr>
+            <td class="week">13 | Dec 11/13</td>
+            <td>Recurrence Relations (10.3)</td>
+            <td>Recurrence Relations (10.4)</td>
+          </tr>
+          <tr>
+            <td class="week">14 | Dec 18/20</td>
+            <td>Course Review</td>
+            <td>Course Review</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">Class Policy, Rules, and Regulations</h2>
+    <ul class="styled-list">
+      <li>Any devices or other equipment that distracts you, other students, or the instructor should not be used during lectures except in emergencies.</li>
+      <li>Missing a lecture can (and probably will) lead to a domino effect. If you miss a lecture, you are strongly recommended to study the material you missed before you return to class. You are responsible for all the material covered in class. So, in case you miss a lecture:
+        <ul>
+          <li>Photocopy, and read notes from someone who was in class.</li>
+          <li>Read the relevant sections from the lecture notes, textbooks, and make an Internet search if necessary.</li>
+        </ul>
+      </li>
+      <li>After you have done this, you may contact the instructor if you need clarification on any materials.</li>
+    </ul>
+
+    <h2 class="section-title">Academic Honesty</h2>
+    <div class="warning-box">
+      <div class="highlight">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        Important Notice
+      </div>
+      <p>Lack of knowledge of the academic honesty policy is not a reasonable explanation for a violation.</p>
+      <p>Any academic fraud will be severely punished. According to the nature and the severity of the offense (which is evaluated by the instructor rather than the offender), possible sanctions include but are not limited to:</p>
+      <ul class="styled-list" style="margin-top: 15px; margin-bottom: 0;">
+        <li>Assigning a grade of <strong>zero</strong> to the assignment;</li>
+        <li>Assigning a final grade of <strong>zero</strong> for the whole course;</li>
+        <li>Conducting to the disciplinary committee.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    MATH 221 · Discrete Mathematics I · Fall 2026
+  </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MATH 221 — Discrete Mathematics I — Syllabus</title>
+<style>
+  :root {
+    --dark-blue: #003399;
+    --dark-red: #b30000;
+    --ink: #1a1a1a;
+    --muted: #555;
+    --line: #d8d8d8;
+    --bg-soft: #f7f8fa;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #eceef1;
+    font-family: "Georgia", "Iowan Old Style", "Palatino Linotype", serif;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  .page {
+    max-width: 850px;
+    margin: 40px auto 80px;
+    background: #fff;
+    padding: 56px 64px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+    border-radius: 2px;
+  }
+
+  header.title-block {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  header.title-block .code {
+    font-size: 1.55rem;
+    letter-spacing: 0.08em;
+    font-variant: small-caps;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  header.title-block .name {
+    font-size: 1.55rem;
+    font-variant: small-caps;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  header.title-block .semester {
+    margin-top: 4px;
+    font-size: 1.05rem;
+    color: var(--muted);
+  }
+
+  .info-block {
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    padding: 18px 0;
+    margin: 0 auto 32px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .info-table {
+    border-collapse: collapse;
+  }
+
+  .info-table td {
+    padding: 4px 10px;
+    vertical-align: top;
+    font-size: 0.98rem;
+  }
+
+  .info-table td.label {
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .info-table a {
+    color: var(--dark-blue);
+    text-decoration: none;
+  }
+
+  .info-table a:hover {
+    text-decoration: underline;
+  }
+
+  h2.section-heading {
+    font-size: 1.08rem;
+    font-weight: 700;
+    margin: 32px 0 10px;
+    color: var(--ink);
+  }
+
+  ul.plain-list {
+    margin: 0 0 4px;
+    padding-left: 22px;
+  }
+
+  ul.plain-list li {
+    margin-bottom: 6px;
+  }
+
+  ul.plain-list ul {
+    margin-top: 6px;
+  }
+
+  p {
+    margin: 6px 0 14px;
+  }
+
+  a {
+    color: var(--dark-blue);
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 40px 0;
+  }
+
+  table.outline {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0 8px;
+    font-size: 0.92rem;
+  }
+
+  table.outline caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  table.outline th, table.outline td {
+    border: 1px solid #b9bdc4;
+    padding: 8px 10px;
+    text-align: left;
+  }
+
+  table.outline thead th {
+    background: var(--bg-soft);
+    font-weight: 700;
+  }
+
+  table.outline tbody tr:nth-child(even) {
+    background: #fbfbfc;
+  }
+
+  table.outline tr.midterm td {
+    background: #fdecec;
+    font-style: italic;
+    color: var(--dark-red);
+  }
+
+  .week-cell {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .honesty {
+    background: var(--bg-soft);
+    border-left: 4px solid var(--dark-red);
+    padding: 14px 18px;
+    border-radius: 2px;
+  }
+
+  .honesty .pointer {
+    color: var(--dark-red);
+    font-weight: 700;
+    margin-right: 6px;
+  }
+
+  .tentative-note {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: -4px;
+  }
+
+  footer.foot {
+    margin-top: 48px;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #999;
+  }
+
+  @media (max-width: 640px) {
+    .page {
+      padding: 32px 20px;
+      margin: 0;
+      border-radius: 0;
+    }
+    .info-block {
+      padding: 14px 0;
+    }
+    table.outline {
+      font-size: 0.8rem;
+    }
+    table.outline th, table.outline td {
+      padding: 6px 6px;
+    }
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { box-shadow: none; margin: 0; padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="title-block">
+    <div class="code">MATH 221</div>
+    <div class="name">Discrete Mathematics I</div>
+    <div class="semester">Fall 2026</div>
+  </header>
+
+  <div class="info-block">
+    <table class="info-table">
+      <tr>
+        <td class="label">Instructor:</td>
+        <td>Murat Ak</td>
+      </tr>
+      <tr>
+        <td class="label">Email:</td>
+        <td><a href="mailto:muratak@akdeniz.edu.tr">muratak@akdeniz.edu.tr</a></td>
+      </tr>
+      <tr>
+        <td class="label">Weekly Schedule:</td>
+        <td>Mon 13:30–17:20, Room D206</td>
+      </tr>
+    </table>
+  </div>
+
+  <h2 class="section-heading">Textbooks</h2>
+  <ul class="plain-list">
+    <li><strong>Required:</strong> Grimaldi, <em>Discrete and Combinatorial Mathematics: An Applied Introduction</em>, 5th Edition, Pearson, 2003.</li>
+    <li><strong>Suggested:</strong> Rosen, <em>Discrete Mathematics and Its Applications</em>, 7th Edition, McGraw-Hill Edu., 2011.</li>
+    <li><strong>Suggested:</strong> Graham, Knuth, Patashnik, <em>Concrete Mathematics</em>, 2nd Edition, Addison-Wesley, 1994.</li>
+    <li><strong>Suggested:</strong> Ross, <em>Topics in Finite and Discrete Mathematics</em>, Cambridge, 2004.</li>
+    <li><a href="https://akmurat.notion.site/06157f99c00c4dc3974e0ed4ab297652?v=a6eab042dd68473c8935090a87e5823f" target="_blank" rel="noopener">All books</a></li>
+  </ul>
+
+  <h2 class="section-heading">Objectives</h2>
+  <p>This course is designed for computer engineering undergraduate students. Its aim is to introduce the terminology, available methods, and ideas in discrete mathematics to future computer scientists/engineers.</p>
+
+  <h2 class="section-heading">Grading Policy</h2>
+  <ul class="plain-list">
+    <li><strong>Midterm (40%)</strong> — Counting Principles</li>
+    <li><strong>Final (60%)</strong> — Advanced Counting</li>
+    <li><strong>Bonus: Participation (?%)</strong> — High-quality contribution during the lectures (questions, answers, etc.) will get instant bonus points, added to exam grades later.</li>
+  </ul>
+
+  <hr class="divider">
+
+  <h2 class="section-heading">Tentative Course Outline</h2>
+  <p class="tentative-note">(may change due to the midterm week, etc.)</p>
+
+  <table class="outline">
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Day 1 Subject</th>
+        <th>Day 2 Subject</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="week-cell">01 | Sep 18/20</td>
+        <td>Course info</td>
+        <td>Counting Basics (1.1, 1.2)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">02 | Sep 25/27</td>
+        <td>Combinations (1.3, 1.4)</td>
+        <td>Catalan Numbers (1.5)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">03 | Oct 02/04</td>
+        <td>Logic Basics (2.1, 2.2, 2.3)</td>
+        <td>Quantifiers (2.4, 2.5)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">04 | Oct 09/11</td>
+        <td>Math. Induction (4.1, 4.2)</td>
+        <td>Divisibility (4.3, 4.4, 4.5)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">05 | Oct 16/18</td>
+        <td>Relations (5.1–5.4)</td>
+        <td>Pigeonhole Pr. (5.5)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">06 | Oct 23/25</td>
+        <td>Relations (7.1–7.4)</td>
+        <td>Relations (7.1–7.4)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">07 | Oct 30/Nov 01</td>
+        <td>Problem Solving</td>
+        <td>Midterm Review</td>
+      </tr>
+      <tr class="midterm">
+        <td class="week-cell">08 | Nov 06/08</td>
+        <td>Midterm Week</td>
+        <td>Midterm Week</td>
+      </tr>
+      <tr>
+        <td class="week-cell">09 | Nov 13/15</td>
+        <td>Inc-Exc (8.1–8.2)</td>
+        <td>Inc-Exc (8.1–8.2)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">10 | Nov 20/22</td>
+        <td>Derangements (8.3)</td>
+        <td>Rook Poly. (8.4–8.5)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">11 | Nov 27/29</td>
+        <td>Gen. Func. (9.3–9.5)</td>
+        <td>Gen. Func. (9.3–9.5)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">12 | Dec 04/06</td>
+        <td>Recurrence Relations (10.1)</td>
+        <td>Recurrence Relations (10.2)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">13 | Dec 11/13</td>
+        <td>Recurrence Relations (10.3)</td>
+        <td>Recurrence Relations (10.4)</td>
+      </tr>
+      <tr>
+        <td class="week-cell">14 | Dec 18/20</td>
+        <td>Course Review</td>
+        <td>Course Review</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr class="divider">
+
+  <h2 class="section-heading">Class Policy, Rules, and Regulations</h2>
+  <ul class="plain-list">
+    <li>Any devices or other equipment that distracts you, other students, or the instructor should not be used during lectures except in emergencies.</li>
+    <li>Missing a lecture can (and probably will) lead to a domino effect. If you miss a lecture, you are strongly recommended to study the material you missed before you return to class. You are responsible for all the material covered in class. So, in case you miss a lecture:
+      <ul>
+        <li>Photocopy, and read notes from someone who was in class,</li>
+        <li>Read the relevant sections from the lecture notes, textbooks, and make an Internet search if necessary,</li>
+      </ul>
+      After you have done this, you may contact the instructor if you need clarification on any materials.
+    </li>
+  </ul>
+
+  <h2 class="section-heading">Academic Honesty</h2>
+  <div class="honesty">
+    <p><span class="pointer">☞</span>Lack of knowledge of the academic honesty policy is not a reasonable explanation for a violation.</p>
+    <p>Any academic fraud will be severely punished. According to the nature and the severity of the offense (which is, of course, evaluated by the instructor rather than the offender), there may be possible sanctions that include but are not limited to:</p>
+    <ul class="plain-list">
+      <li>Assigning a grade of <strong>zero</strong> to the assignment;</li>
+      <li>Assigning a final grade of <strong>zero</strong> for the whole course;</li>
+      <li>Conducting to the disciplinary committee.</li>
+    </ul>
+  </div>
+
+  <footer class="foot">MATH 221 · Discrete Mathematics I · Fall 2026</footer>
+
+</div>
+</body>
+</html>
